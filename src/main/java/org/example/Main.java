@@ -132,6 +132,67 @@ public class Main {
                 .reduce(0, Integer::sum);
     }
 
+    // Longest Common Prefix
+    public static String longestCommonPrefix(String[] strs) {
+        String check = strs[0];
+        int curLen;
+        int diff = 0;
+        for (int i = 1; i < strs.length; i++) {
+            curLen = strs[i].length();
+
+            while (check.length() > 0 && diff == 0) {
+                if (curLen > check.length())
+                    diff = curLen - strs[i].replaceAll("^(" + check + ")", "").length();
+                else
+                    diff = check.length() - check.replaceAll("^(" + strs[i] + ")", "").length();
+
+                if (diff == 0) check = check.substring(0, check.length() - 1);
+                else check = check.substring(0, diff);
+            }
+            diff = 0;
+        }
+        return check;
+    }
+
+    // Snail travel
+    public static int[] snail1(int[][] array) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int N = array.length;
+        for (int i = 0; i < N; i++) {
+            if (i % 2 == 1) {
+                for (int j = N - 1; j > 0; j--) {
+                    result.add(array[i][j]);
+                }
+            } else {
+                for (int j = 0; j < N; j++) {
+                    result.add(array[i][j]);
+                }
+            }
+        }
+        return result.stream().mapToInt(i -> i).toArray();
+    }
+
+    public static int[] snail2(int[][] array) {
+        ArrayList<Integer> result = new ArrayList<>();
+        int N = array.length;
+        if (array[0].length == 0) return new int[] {};
+        for (int level = 0; level < N; level++) {
+            for (int j = level; j < N - level; j++) {
+                result.add(array[level][j]);
+            }
+            for (int j = level + 1; j < N - level; j++) {
+                result.add(array[j][N - level - 1]);
+            }
+            for (int j = N - level - 2; j >= level; j--) {
+                result.add(array[N - level - 1][j]);
+            }
+            for (int j = N - level - 2; j > level; j--) {
+                result.add(array[j][level]);
+            }
+        }
+        return result.stream().mapToInt(i -> i).toArray();
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -143,5 +204,7 @@ public class Main {
         //System.out.println(arraySign(new int[] {1,5,0,2,-3}));
         // findDifference(new int[] {1,2,3}, new int[] {2,4,6});
         // System.out.println(orderWeight("56 65 74 100 99 68 86 180 90"));
+        // System.out.println(longestCommonPrefix(new String[]{"abab", "aba", ""}));
+        System.out.println(Arrays.toString(snail2(new int[][]{{}})));
     }
 }
