@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 
+
 public class Main {
     public static long ipsBetween(String start, String end) {
         int[] startArray = Arrays.stream(start.split("\\.")).mapToInt(Integer::parseInt).toArray();
@@ -175,7 +176,7 @@ public class Main {
     public static int[] snail2(int[][] array) {
         ArrayList<Integer> result = new ArrayList<>();
         int N = array.length;
-        if (array[0].length == 0) return new int[] {};
+        if (array[0].length == 0) return new int[]{};
         for (int level = 0; level < N; level++) {
             for (int j = level; j < N - level; j++) {
                 result.add(array[level][j]);
@@ -193,6 +194,92 @@ public class Main {
         return result.stream().mapToInt(i -> i).toArray();
     }
 
+    // Maximum Number of Vowels in a Substring of Given Length
+    // Time Limit Exceeded
+    public static int maxVowels2(String s, int k) {
+        int max = 0;
+        for (int i = 0; i < s.length() - k + 1; i++) {
+            String substring = s.substring(i, i + k);
+            int currentLen = substring.length() - substring.replaceAll("[aeiou]*", "").length();
+            if (currentLen > max) max = currentLen;
+        }
+        return max;
+    }
+
+    // Maximum Number of Vowels in a Substring of Given Length
+    public static int maxVowels(String s, int k) {
+        String substring = s.substring(0, k);
+        int count = substring.length() - substring.replaceAll("[aeiou]*", "").length();
+
+        int currentCount = count;
+        for (int i = k; i < s.length(); i++) {
+            if (checkVovel(s.charAt(i))) currentCount++;
+            if (checkVovel(s.charAt(i - k))) currentCount--;
+            if (currentCount > count) count = currentCount;
+        }
+        return count;
+    }
+
+    static boolean checkVovel(char c) {
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
+            return true;
+        return false;
+    }
+
+    //    You are given the heads of two sorted linked lists list1 and list2.
+//    Merge the two lists in a one sorted list.
+//    The list should be made by splicing together the nodes of the first two lists.
+    public static ListNode mergeTwoLists(ListNode list1, ListNode list2) {
+        ListNode merged = new ListNode(0);
+        ListNode mergedNext = new ListNode(0, merged);
+        boolean lemoned1 = list1 == null;
+        boolean lemoned2 = list2 == null;
+        while ((list1 != null || list2 != null) && !lemoned1 && !lemoned2) {
+            if (list1.val < list2.val) {
+                merged.next = new ListNode(list1.val);
+                if (list1.next != null) list1 = list1.next;
+                else lemoned1 = true;
+            } else {
+                merged.next = new ListNode(list2.val);
+                if (list2.next != null) list2 = list2.next;
+                else lemoned2 = true;
+            }
+            merged = merged.next;
+        }
+        if (lemoned1) {
+            while (list2 != null) {
+                merged.next = new ListNode(list2.val);
+                list2 = list2.next;
+                merged = merged.next;
+            }
+        }
+        if (lemoned2) {
+            while (list1 != null) {
+                merged.next = new ListNode(list1.val);
+                list1 = list1.next;
+                merged = merged.next;
+            }
+        }
+        return mergedNext.next.next;
+    }
+
+    // RGB To Hex Conversion
+    public static String rgb(int r, int g, int b) {
+        StringBuilder sb = new StringBuilder();
+        toHex(sb, r);
+        toHex(sb, g);
+        toHex(sb, b);
+        return sb.toString().toUpperCase();
+    }
+
+    public static StringBuilder toHex(StringBuilder sb, int c) {
+        if (c < 0) return sb.append("00");
+        else if (c > 255) return sb.append("FF");
+        sb.append(Integer.toHexString(c / 16));
+        sb.append(Integer.toHexString(c % 16));
+        return sb;
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -205,6 +292,10 @@ public class Main {
         // findDifference(new int[] {1,2,3}, new int[] {2,4,6});
         // System.out.println(orderWeight("56 65 74 100 99 68 86 180 90"));
         // System.out.println(longestCommonPrefix(new String[]{"abab", "aba", ""}));
-        System.out.println(Arrays.toString(snail2(new int[][]{{}})));
+        // System.out.println(Arrays.toString(snail2(new int[][]{{}})));
+
+        //System.out.println(maxVowels("weallloveyou", 7));
+//        mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(3))),
+//                new ListNode(2, new ListNode(4, new ListNode(10))));
     }
 }
