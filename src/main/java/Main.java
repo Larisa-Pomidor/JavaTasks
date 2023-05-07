@@ -279,6 +279,22 @@ public class Main {
         return sb;
     }
 
+    public static String makeComplement(String dna) {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < dna.length(); i++) {
+            sb.append(findComplementor(dna.charAt(i)));
+        }
+
+        return sb.toString();
+    }
+
+    public static char findComplementor (char c) {
+        if (c == 'A') return 'T';
+        else if (c == 'T') return 'A';
+        else if (c == 'C') return 'G';
+        else return 'C';
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
