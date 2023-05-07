@@ -1,4 +1,3 @@
-package org.example;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
@@ -294,7 +293,7 @@ public class Main {
         // System.out.println(longestCommonPrefix(new String[]{"abab", "aba", ""}));
         // System.out.println(Arrays.toString(snail2(new int[][]{{}})));
 
-        //System.out.println(maxVowels("weallloveyou", 7));
+        // System.out.println(maxVowels("weallloveyou", 7));
 //        mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(3))),
 //                new ListNode(2, new ListNode(4, new ListNode(10))));
     }
