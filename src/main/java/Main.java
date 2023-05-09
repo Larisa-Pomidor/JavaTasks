@@ -279,6 +279,9 @@ public class Main {
         return sb;
     }
 
+    // In DNA strings, symbols "A" and "T" are complements of each other, as "C" and "G".
+    // Your function receives one side of the DNA; you need to return the other complementary side.
+    // DNA strand is never empty or there is no DNA at all.
     public static String makeComplement(String dna) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < dna.length(); i++) {
@@ -288,11 +291,25 @@ public class Main {
         return sb.toString();
     }
 
-    public static char findComplementor (char c) {
+    public static char findComplementor(char c) {
         if (c == 'A') return 'T';
         else if (c == 'T') return 'A';
         else if (c == 'C') return 'G';
         else return 'C';
+    }
+
+    public static int[] plusOne(int[] digits) {
+        ArrayList<Integer> sum = new ArrayList<>();
+        int rest = 1;
+
+        for (int i = digits.length - 1; i >= 0; i--) {
+            int curSum = digits[i] + rest;
+            sum.add(0, curSum % 10);
+            rest = curSum < 10 ? 0 : curSum / 10;
+        }
+
+        if (rest != 0) sum.add(0, rest % 10);
+        return sum.stream().mapToInt(i -> i).toArray();
     }
 
     public static void main(String[] args) {
@@ -312,5 +329,7 @@ public class Main {
         // System.out.println(maxVowels("weallloveyou", 7));
 //        mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(3))),
 //                new ListNode(2, new ListNode(4, new ListNode(10))));
+        // System.out.println(makeComplement("TACGACT"));
+        System.out.println(plusOne(new int[] {9}));
     }
 }
