@@ -1,7 +1,7 @@
-
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.stream.Collectors;
 
 
 public class Main {
@@ -127,9 +127,7 @@ public class Main {
     }
 
     public static int sum(String a) {
-        return Arrays.stream(a.split(""))
-                .mapToInt(Integer::parseInt)
-                .reduce(0, Integer::sum);
+        return Arrays.stream(a.split("")).mapToInt(Integer::parseInt).reduce(0, Integer::sum);
     }
 
     // Longest Common Prefix
@@ -141,10 +139,8 @@ public class Main {
             curLen = strs[i].length();
 
             while (check.length() > 0 && diff == 0) {
-                if (curLen > check.length())
-                    diff = curLen - strs[i].replaceAll("^(" + check + ")", "").length();
-                else
-                    diff = check.length() - check.replaceAll("^(" + strs[i] + ")", "").length();
+                if (curLen > check.length()) diff = curLen - strs[i].replaceAll("^(" + check + ")", "").length();
+                else diff = check.length() - check.replaceAll("^(" + strs[i] + ")", "").length();
 
                 if (diff == 0) check = check.substring(0, check.length() - 1);
                 else check = check.substring(0, diff);
@@ -220,8 +216,7 @@ public class Main {
     }
 
     static boolean checkVovel(char c) {
-        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u')
-            return true;
+        if (c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u') return true;
         return false;
     }
 
@@ -312,6 +307,22 @@ public class Main {
         return sum.stream().mapToInt(i -> i).toArray();
     }
 
+    public static int thirdMax(int[] nums) {
+        List<Integer> distArray = Arrays.stream(nums).boxed().distinct().sorted(Comparator.reverseOrder()).toList();
+        if (distArray.size() < 3) return Collections.max(distArray);
+        else return distArray.get(2);
+    }
+
+    // Given an integer array nums, move all 0's to the end of it while
+    // maintaining the relative order of the non-zero elements.
+    public static int[] moveZeroes(int[] nums) {
+        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
+        int zeroLength = nums.length - noZeros.size();
+        ArrayList<Integer> list = new ArrayList<>(noZeros);
+        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
+        return list.stream().mapToInt(i -> i).toArray();
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -330,6 +341,8 @@ public class Main {
 //        mergeTwoLists(new ListNode(1, new ListNode(2, new ListNode(3))),
 //                new ListNode(2, new ListNode(4, new ListNode(10))));
         // System.out.println(makeComplement("TACGACT"));
-        System.out.println(plusOne(new int[] {9}));
+        // System.out.println(plusOne(new int[] {9}));
+        // System.out.println(thirdMax(new int[]{1, 2, 2, 3}));
+        Arrays.stream(moveZeroes(new int[]{0,1,0,3,12})).forEach(System.out::print);
     }
 }
