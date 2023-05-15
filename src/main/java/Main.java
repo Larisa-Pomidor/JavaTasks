@@ -323,6 +323,85 @@ public class Main {
         return list.stream().mapToInt(i -> i).toArray();
     }
 
+    // Given an integer array nums, move all 0's to the end of it while
+    // maintaining the relative order of the non-zero elements.
+    public static void moveZeroes2(int[] nums) {
+        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
+        int zeroLength = nums.length - noZeros.size();
+        ArrayList<Integer> list = new ArrayList<>(noZeros);
+        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
+        for (int i = 0; i < nums.length; i++) {
+            nums[i] = list.get(i);
+        }
+    }
+
+    public static ListNode swapNodes(ListNode head, int k) {
+        ListNode tempNode = head;
+        ListNode second = head;
+        int counter = 1;
+        while (counter < k) {
+            tempNode = tempNode.next;
+            counter++;
+        }
+
+        ListNode first = tempNode;
+
+        while (tempNode.next != null) {
+            tempNode = tempNode.next;
+            second = second.next;
+        }
+
+        int tempVal = first.val;
+        first.val = second.val;
+        second.val = tempVal;
+
+        return head;
+    }
+
+    // You are given two non-empty linked lists representing two non-negative integers.
+    // The digits are stored in reverse order, and each of their nodes contains a single digit.
+    // Add the two numbers and return the sum as a linked list.
+    public static ListNode addTwoNumbers(ListNode l1, ListNode l2) {
+        ListNode result = new ListNode(0);
+        ListNode finalResult = new ListNode(0, result);
+        int remain = 0;
+        while (l1 != null && l2 != null) {
+            result.next = new ListNode((l1.val + l2.val + remain) % 10);
+            remain = (l1.val + l2.val + remain) / 10;
+            l1 = l1.next;
+            l2 = l2.next;
+            result = result.next;
+        }
+
+        while (l1 != null) {
+            result.next = new ListNode((l1.val + remain) % 10);
+            remain = (remain + l1.val) / 10;
+            l1 = l1.next;
+            result = result.next;
+        }
+        while (l2 != null) {
+            result.next = new ListNode((l2.val + remain) % 10);
+            remain = (remain + l2.val) / 10;
+            l2 = l2.next;
+            result = result.next;
+        }
+        if (remain != 0) {
+            result.next = new ListNode(remain);
+        }
+
+        return finalResult.next.next;
+    }
+
+    // Given an integer n and two other values, build an array of size n filled with these two values alternating.
+    public static String[] alternate(int n, String firstValue, String secondValue) {
+        ArrayList<String> result = new ArrayList<>(n);
+        for (int i = 0; i < n; i++) {
+           if (i % 2 == 0) result.add(firstValue);
+           else result.add(secondValue);
+        }
+        return result.toArray(new String[0]);
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -343,6 +422,14 @@ public class Main {
         // System.out.println(makeComplement("TACGACT"));
         // System.out.println(plusOne(new int[] {9}));
         // System.out.println(thirdMax(new int[]{1, 2, 2, 3}));
-        Arrays.stream(moveZeroes(new int[]{0,1,0,3,12})).forEach(System.out::print);
+//        Arrays.stream(moveZeroes(new int[]{0, 1, 0, 3, 12})).forEach(System.out::print);
+//        swapNodes(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(6)))), 2);
+       ListNode jj = addTwoNumbers(new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))),
+                new ListNode(9, new ListNode(9)));
+
+       while (jj != null) {
+           System.out.println(jj.val);
+           jj = jj.next;
+       }
     }
 }
