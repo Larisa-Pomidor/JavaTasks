@@ -1,3 +1,5 @@
+import com.sun.jdi.IntegerValue;
+
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
@@ -396,10 +398,133 @@ public class Main {
     public static String[] alternate(int n, String firstValue, String secondValue) {
         ArrayList<String> result = new ArrayList<>(n);
         for (int i = 0; i < n; i++) {
-           if (i % 2 == 0) result.add(firstValue);
-           else result.add(secondValue);
+            if (i % 2 == 0) result.add(firstValue);
+            else result.add(secondValue);
         }
         return result.toArray(new String[0]);
+    }
+
+    //Given a string s, return the longest palindromic substring in s.
+    public static String longestPalindrome(String s) {
+        int sLength = s.length();
+        if (sLength == 1) return s;
+        String result = s.substring(0, 1);
+        for (int i = 1; i < sLength; i++) {
+            int offset = 1;
+            while (i >= offset && i + offset < sLength && s.charAt(i - offset) == s.charAt(i + offset) ) {
+                if (result.length() < offset * 2 + 1) result = s.substring(i - offset, i + offset + 1);
+                offset++;
+            }
+        }
+
+        for (int i = 0; i < sLength; i++) {
+            int offset = 0;
+            while (i >= offset && i + offset + 1 < sLength && s.charAt(i - offset) == s.charAt(i + offset + 1)) {
+                if (result.length() < (offset + 1) * 2) result = s.substring(i - offset, i + offset + 2);
+                offset++;
+            }
+        }
+        return result;
+    }
+
+    // Given a signed 32-bit integer x, return x with its digits reversed.
+    // If reversing x causes the value to go outside the signed 32-bit integer range [-231, 231 - 1], then return 0.
+    public static int reverse(int x) {
+        if (x == 0) return 0;
+        StringBuilder sb = new StringBuilder(Integer.toString(x));
+        String minus = "";
+        if (sb.charAt(0) == '-') {
+            sb.deleteCharAt(0);
+            minus = "-";
+        }
+        sb.reverse();
+
+        long test = Long.parseLong(minus + sb.toString().replaceAll("^0*", ""));
+
+        if (test > Math.pow(2, 31)-1 || test < -(Math.pow(2, 31))) {
+            return 0;
+        }
+        return (int) test;
+    }
+
+    // Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+    public static int divide(int dividend, int divisor) {
+        long longDividend = (long) dividend;
+        long longDivisor = (long) divisor;
+
+        if (longDividend <= Integer.MIN_VALUE && (longDivisor == -1)) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (longDividend <= Integer.MIN_VALUE && (longDivisor == 1)) {
+            return Integer.MIN_VALUE;
+        }
+
+        if (longDividend >= Integer.MAX_VALUE && (longDivisor == -1)) {
+            return Integer.MIN_VALUE;
+        }
+
+        if (longDividend >= Integer.MAX_VALUE && (longDivisor == 1)) {
+            return Integer.MAX_VALUE;
+        }
+
+        if (longDividend == 0) return 0;
+
+        boolean negative = false;
+        if (longDividend < 0) { negative = !negative; longDividend = -longDividend; }
+        if (longDivisor < 0) { negative = !negative; longDivisor = -longDivisor; }
+
+        long result = 0;
+
+        while (longDividend - longDivisor >= 0) {
+            longDividend = longDividend - longDivisor;
+            result++;
+        }
+
+        if (negative) result = -result;
+
+        if (result > Integer.MAX_VALUE) {
+            return Integer.MAX_VALUE;
+        }
+
+
+        if (result < Integer.MIN_VALUE) {
+            return Integer.MIN_VALUE - 1;
+        }
+
+        return (int) result;
+    }
+
+    // Write a function that returns the sum of two numbers.
+    // The input numbers are strings and the function must return a string.
+    public static String add(String a, String b) {
+        int remain = 0;
+        StringBuilder sb = new StringBuilder();
+        int index = 0;
+        while (index < a.length() && index < b.length()) {
+            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) +
+                    (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) % 10);
+            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))
+                    + (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain)  / 10;
+            index++;
+        }
+        while (index < a.length()) {
+            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))  + remain) % 10);
+            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))  + remain) / 10;
+            index++;
+        }
+
+        while (index < b.length()) {
+            sb.insert(0, ((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index))))  + remain) % 10);
+            remain = (((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index))))  + remain) / 10);
+            index++;
+        }
+
+        if (remain != 0) {
+            sb.insert(0, remain);
+        }
+
+        return sb.toString().replaceAll("^0*", "");
     }
 
     public static void main(String[] args) {
@@ -424,12 +549,11 @@ public class Main {
         // System.out.println(thirdMax(new int[]{1, 2, 2, 3}));
 //        Arrays.stream(moveZeroes(new int[]{0, 1, 0, 3, 12})).forEach(System.out::print);
 //        swapNodes(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(6)))), 2);
-       ListNode jj = addTwoNumbers(new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))),
-                new ListNode(9, new ListNode(9)));
-
-       while (jj != null) {
-           System.out.println(jj.val);
-           jj = jj.next;
-       }
+//        ListNode jj = addTwoNumbers(new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))),
+//                new ListNode(9, new ListNode(9)));
+       // System.out.println(longestPalindrome("bb"));
+       // System.out.println(reverse(9646324351));
+       // System.out.println(divide(2147483647, -1));
+        System.out.println(add("1372", "69"));
     }
 }
