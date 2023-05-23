@@ -527,6 +527,40 @@ public class Main {
         return sb.toString().replaceAll("^0*", "");
     }
 
+    public static void exceptionTest () {
+        try {
+            throw new IllegalStateException("Exception!");
+        }
+        catch (IllegalStateException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    // Given a non-empty array of integers nums, every element appears twice except for one. Find that single one.
+    //
+    //You must implement a solution with a linear runtime complexity and use only constant extra space.
+    public static int singleNumber(int[] nums) {
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            result ^= nums[i];
+        }
+        return result;
+    }
+
+    // You have n coins and you want to build a staircase with these coins.
+    // The staircase consists of k rows where the ith row has exactly i coins.
+    // The last row of the staircase may be incomplete.
+    //
+    //Given the integer n, return the number of complete rows of the staircase you will build.
+    public static int arrangeCoins(int n) {
+        int line = 1;
+        while (n - line >= 0) {
+            n -=line;
+            line++;
+        }
+        return line - 1;
+    }
+
     public static void main(String[] args) {
         //long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -554,6 +588,9 @@ public class Main {
        // System.out.println(longestPalindrome("bb"));
        // System.out.println(reverse(9646324351));
        // System.out.println(divide(2147483647, -1));
-        System.out.println(add("1372", "69"));
+      //  System.out.println(add("1372", "69"));
+       // exceptionTest();
+       // System.out.println(singleNumber(new int[] {2,2,1}));
+        System.out.println(arrangeCoins(8));
     }
 }
