@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 
 public class Main {
@@ -561,8 +562,66 @@ public class Main {
         return line - 1;
     }
 
+    // Write an algorithm to determine if a number n is happy.
+    public static boolean isHappy(int n) {
+        String[] array;
+        while (n % 10 != n) {
+            array = String.valueOf(n).split("");
+            n = Arrays.stream(array).map(i -> Integer.parseInt(i) * Integer.parseInt(i)).reduce(0, Integer::sum);
+        }
+        return n == 1 || n == 7;
+    }
+
+    public static int removeElement(int[] nums, int val) {
+        int clean = 0;
+        int i;
+        boolean stop = false;
+        for (i = nums.length - 1; i >= 0; i--) {
+            if (nums[i] != val) {
+                if (stop) break;
+                for (int j = clean; j < nums.length; j++) {
+                    if (nums[clean] == val) {
+                        int temp = nums[clean];
+                        nums[clean] = nums[i];
+                        nums[i] = temp;
+                        break;
+                    }
+                    clean = j;
+                    if (i <= clean) {
+                        stop = true;
+                        break;
+                    }
+                }
+            }
+        }
+
+        return !stop ? 0 : (clean + 1);
+    }
+
+    // Given an integer array nums of size n, return the number with the value closest to 0 in nums.
+    // If there are multiple answers, return the number with the largest value.
+    public static int findClosestNumber(int[] nums) {
+        int min = nums[0];
+        for (int n: nums) {
+            min = Math.abs(min) == Math.abs(n) ? (min > n ? min : n) : (Math.abs(min) > Math.abs(n) ? n : min);
+        }
+
+        return min;
+    }
+
+    public static boolean strongPasswordCheckerII(String password) {
+        if (password.length() < 8) return false;
+        if (!password.matches(".*\\d.*")) return false;
+        if (!password.matches(".*[a-z].*")) return false;
+        if (!password.matches(".*[A-Z].*")) return false;
+        if (!password.matches(".*[!@#$%^&*()\\-+].*")) return false;
+        for (int i = 0; i < password.length() - 1; i++)
+            if (password.charAt(i) == password.charAt(i+1)) return false;
+        return true;
+    }
+
     public static void main(String[] args) {
-        //long res = ipsBetween("10.0.0.0", "10.0.0.50");
+        // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
         //periodIsLate(LocalDate.of(2016, 6, 13), LocalDate.of(2016, 7, 16), 35);
         //System.out.println(scramble("rkqodlw","world"));
@@ -591,6 +650,9 @@ public class Main {
       //  System.out.println(add("1372", "69"));
        // exceptionTest();
        // System.out.println(singleNumber(new int[] {2,2,1}));
-        System.out.println(arrangeCoins(8));
+        // System.out.println(arrangeCoins(8));
+        // System.out.println(removeElement(new int[] {2}, 1));
+        // System.out.println(findClosestNumber(new int[] {-4,-2,1,4,8}));
+        System.out.println(strongPasswordCheckerII("-Aa1a1a1"));
     }
 }
