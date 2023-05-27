@@ -412,7 +412,7 @@ public class Main {
         String result = s.substring(0, 1);
         for (int i = 1; i < sLength; i++) {
             int offset = 1;
-            while (i >= offset && i + offset < sLength && s.charAt(i - offset) == s.charAt(i + offset) ) {
+            while (i >= offset && i + offset < sLength && s.charAt(i - offset) == s.charAt(i + offset)) {
                 if (result.length() < offset * 2 + 1) result = s.substring(i - offset, i + offset + 1);
                 offset++;
             }
@@ -442,7 +442,7 @@ public class Main {
 
         long test = Long.parseLong(minus + sb.toString().replaceAll("^0*", ""));
 
-        if (test > Math.pow(2, 31)-1 || test < -(Math.pow(2, 31))) {
+        if (test > Math.pow(2, 31) - 1 || test < -(Math.pow(2, 31))) {
             return 0;
         }
         return (int) test;
@@ -472,8 +472,14 @@ public class Main {
         if (longDividend == 0) return 0;
 
         boolean negative = false;
-        if (longDividend < 0) { negative = !negative; longDividend = -longDividend; }
-        if (longDivisor < 0) { negative = !negative; longDivisor = -longDivisor; }
+        if (longDividend < 0) {
+            negative = !negative;
+            longDividend = -longDividend;
+        }
+        if (longDivisor < 0) {
+            negative = !negative;
+            longDivisor = -longDivisor;
+        }
 
         long result = 0;
 
@@ -503,21 +509,19 @@ public class Main {
         StringBuilder sb = new StringBuilder();
         int index = 0;
         while (index < a.length() && index < b.length()) {
-            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) +
-                    (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) % 10);
-            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))
-                    + (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain)  / 10;
+            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) + (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) % 10);
+            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) + (Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) / 10;
             index++;
         }
         while (index < a.length()) {
-            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))  + remain) % 10);
-            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index))))  + remain) / 10;
+            sb.insert(0, ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) + remain) % 10);
+            remain = ((Integer.parseInt(String.valueOf(a.charAt(a.length() - 1 - index)))) + remain) / 10;
             index++;
         }
 
         while (index < b.length()) {
-            sb.insert(0, ((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index))))  + remain) % 10);
-            remain = (((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index))))  + remain) / 10);
+            sb.insert(0, ((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) % 10);
+            remain = (((Integer.parseInt(String.valueOf(b.charAt(b.length() - 1 - index)))) + remain) / 10);
             index++;
         }
 
@@ -528,11 +532,10 @@ public class Main {
         return sb.toString().replaceAll("^0*", "");
     }
 
-    public static void exceptionTest () {
+    public static void exceptionTest() {
         try {
             throw new IllegalStateException("Exception!");
-        }
-        catch (IllegalStateException e) {
+        } catch (IllegalStateException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -556,7 +559,7 @@ public class Main {
     public static int arrangeCoins(int n) {
         int line = 1;
         while (n - line >= 0) {
-            n -=line;
+            n -= line;
             line++;
         }
         return line - 1;
@@ -602,7 +605,7 @@ public class Main {
     // If there are multiple answers, return the number with the largest value.
     public static int findClosestNumber(int[] nums) {
         int min = nums[0];
-        for (int n: nums) {
+        for (int n : nums) {
             min = Math.abs(min) == Math.abs(n) ? (min > n ? min : n) : (Math.abs(min) > Math.abs(n) ? n : min);
         }
 
@@ -616,8 +619,112 @@ public class Main {
         if (!password.matches(".*[A-Z].*")) return false;
         if (!password.matches(".*[!@#$%^&*()\\-+].*")) return false;
         for (int i = 0; i < password.length() - 1; i++)
-            if (password.charAt(i) == password.charAt(i+1)) return false;
+            if (password.charAt(i) == password.charAt(i + 1)) return false;
         return true;
+    }
+
+    // An array is monotonic if it is either monotone increasing or monotone decreasing.
+    //Given an integer array nums, return true if the given array is monotonic, or false otherwise.
+    public static boolean isMonotonic(int[] nums) {
+        if (nums.length <= 1) return true;
+        int compared = Integer.compare(nums[0], nums[1]);
+        int curCompared;
+        for (int i = 1; i < nums.length - 1; i++) {
+            curCompared = Integer.compare(nums[i], nums[i + 1]);
+            if (curCompared != 0) {
+                if (compared != 0) {
+                    if (curCompared != compared) return false;
+                } else compared = curCompared;
+            }
+
+        }
+        return true;
+    }
+
+    // Given an integer array bills where bills[i] is the bill the ith customer pays,
+    // return true if you can provide every customer with the correct change, or false otherwise.
+    public static boolean lemonadeChange(int[] bills) {
+        List<Integer> change = new LinkedList<>();
+
+        for (int b : bills) {
+            if (b == 5) change.add(b);
+            if (b == 10) {
+                if (!removeElement(change, 5)) return false;
+                change.add(10);
+            }
+            if (b == 20) {
+                int indexFirst = change.indexOf(10);
+                int indexSecond = change.indexOf(5);
+                if (indexFirst != -1 && indexSecond != -1) {
+                    removeElement(change, 5);
+                    removeElement(change, 10);
+                }
+                else {
+                    if (!removeElement(change, 5)) return false;
+                    if (!removeElement(change, 5)) return false;
+                    if (!removeElement(change, 5)) return false;
+                }
+            }
+        }
+        return true;
+    }
+
+    // Given two strings s and goal,
+    // return true if you can swap two letters in s so the result is equal to goal,
+    // otherwise, return false.
+    public static boolean buddyStrings(String s, String goal) {
+        if (s.length() < 2 || s.length() != goal.length()) return false;
+        Map<Character, Integer> duplicates = new HashMap();
+        ArrayList<Integer> swap = new ArrayList<>(2);
+        for (int i = 0; i < s.length(); i++) {
+            if (s.charAt(i) != goal.charAt(i)) swap.add(i);
+            else duplicates.put(s.charAt(i), duplicates.get(s.charAt(i)) != null ? duplicates.get(s.charAt(i)) + 1 : 1);
+            if (swap.size() > 2) return false;
+        }
+       if (swap.size() == 0) {
+            for (Integer value: duplicates.values()) {
+                if (value >= 2) {
+                    return true;
+                }
+            }
+        }
+        if (swap.size() != 2) return false;
+        if (s.charAt(swap.get(0)) != goal.charAt(swap.get(1))) return false;
+        if (s.charAt(swap.get(1)) != goal.charAt(swap.get(0))) return false;
+
+        return true;
+    }
+
+    public static boolean removeElement(List<Integer> change, int index) {
+        index = change.indexOf(index);
+        if (index != -1) {
+            change.remove(index);
+            return true;
+        }
+        return false;
+    }
+
+    public static int countOperations(int num1, int num2) {
+        int counter = 0;
+        while (num1 != 0 && num2 != 0) {
+            if (num1 < num2) num2 -= num1;
+            else num1 -= num2;
+            counter++;
+        }
+        return counter;
+    }
+
+    // Given the string s, the size of each group k and the character fill,
+    // return a string array denoting the composition of every group s has been divided into,
+    // using the above procedure.
+    public static String[] divideString(String s, int k, char fill) {
+        ArrayList<String> result = new ArrayList<>();
+        for (int i = 0; i < s.length() / k; i++) {
+            result.add(s.substring(i * k , i * k + k));
+        }
+        int rest = s.length() % k;
+        if (rest != 0) result.add(s.substring(s.length() - rest - 1) + String.valueOf(fill).repeat((k - rest)));
+        return result.toArray(new String[0]);
     }
 
     public static void main(String[] args) {
@@ -644,15 +751,18 @@ public class Main {
 //        swapNodes(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(6)))), 2);
 //        ListNode jj = addTwoNumbers(new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))),
 //                new ListNode(9, new ListNode(9)));
-       // System.out.println(longestPalindrome("bb"));
-       // System.out.println(reverse(9646324351));
-       // System.out.println(divide(2147483647, -1));
-      //  System.out.println(add("1372", "69"));
-       // exceptionTest();
-       // System.out.println(singleNumber(new int[] {2,2,1}));
+        // System.out.println(longestPalindrome("bb"));
+        // System.out.println(reverse(9646324351));
+        // System.out.println(divide(2147483647, -1));
+        //  System.out.println(add("1372", "69"));
+        // exceptionTest();
+        // System.out.println(singleNumber(new int[] {2,2,1}));
         // System.out.println(arrangeCoins(8));
         // System.out.println(removeElement(new int[] {2}, 1));
         // System.out.println(findClosestNumber(new int[] {-4,-2,1,4,8}));
-        System.out.println(strongPasswordCheckerII("-Aa1a1a1"));
+        // System.out.println(strongPasswordCheckerII("-Aa1a1a1"));
+        // System.out.println(isMonotonic(new int[]{1,2,2,3}));
+        // System.out.println(lemonadeChange(new int[] {5,5,5,10,5,5,10,20,20,20}));
+        System.out.println(buddyStrings("aa", "aa"));
     }
 }
