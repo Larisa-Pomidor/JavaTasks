@@ -658,8 +658,7 @@ public class Main {
                 if (indexFirst != -1 && indexSecond != -1) {
                     removeElement(change, 5);
                     removeElement(change, 10);
-                }
-                else {
+                } else {
                     if (!removeElement(change, 5)) return false;
                     if (!removeElement(change, 5)) return false;
                     if (!removeElement(change, 5)) return false;
@@ -681,8 +680,8 @@ public class Main {
             else duplicates.put(s.charAt(i), duplicates.get(s.charAt(i)) != null ? duplicates.get(s.charAt(i)) + 1 : 1);
             if (swap.size() > 2) return false;
         }
-       if (swap.size() == 0) {
-            for (Integer value: duplicates.values()) {
+        if (swap.size() == 0) {
+            for (Integer value : duplicates.values()) {
                 if (value >= 2) {
                     return true;
                 }
@@ -720,11 +719,91 @@ public class Main {
     public static String[] divideString(String s, int k, char fill) {
         ArrayList<String> result = new ArrayList<>();
         for (int i = 0; i < s.length() / k; i++) {
-            result.add(s.substring(i * k , i * k + k));
+            result.add(s.substring(i * k, i * k + k));
         }
         int rest = s.length() % k;
         if (rest != 0) result.add(s.substring(s.length() - rest - 1) + String.valueOf(fill).repeat((k - rest)));
         return result.toArray(new String[0]);
+    }
+
+    // Given an array of strings words, return the first palindromic string in the array.
+    // If there is no such string, return an empty string "".
+    public static String firstPalindrome(String[] words) {
+        for (String w : words) {
+            if (isPalindrom(w)) return w;
+        }
+        return "";
+    }
+
+    public static boolean isPalindrom(String s) {
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) return false;
+        }
+        return true;
+    }
+
+    // Given a 0-indexed string word and a character ch,
+    // reverse the segment of word that starts at index 0 and ends
+    // at the index of the first occurrence of ch (inclusive).
+    // If the character ch does not exist in word, do nothing.
+    public static String reversePrefix(String word, char ch) {
+        if (word.indexOf(ch) == -1) return word;
+        return new StringBuilder(word.substring(0, word.indexOf(ch) + 1)).reverse() + word.substring(word.indexOf(ch) + 1);
+    }
+
+    // Given three integer arrays nums1, nums2, and nums3, return a distinct array containing all the values that are present
+    // in at least two out of the three arrays. You may return the values in any order.
+    public static List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
+        List<Integer> result = new ArrayList<>();
+        Map<Integer, Integer> commonMap = new HashMap<>();
+        commonElements(new HashSet<>(Arrays.stream(nums1).boxed().toList()), commonMap);
+        commonElements(new HashSet<>(Arrays.stream(nums2).boxed().toList()), commonMap);
+        commonElements(new HashSet<>(Arrays.stream(nums3).boxed().toList()), commonMap);
+
+        for (Map.Entry<Integer, Integer> commonEl : commonMap.entrySet()) {
+            if (commonEl.getValue() >= 2)
+                result.add(commonEl.getKey());
+        }
+        return result;
+    }
+
+    public static Map<Integer, Integer> commonElements(HashSet<Integer> nums, Map<Integer, Integer> commonMap) {
+        for (int n : nums) {
+            commonMap.put(n, commonMap.get(n) != null ? commonMap.get(n) + 1 : 1);
+        }
+        return commonMap;
+    }
+
+    // Given a positive integer n, return the smallest positive integer that is a multiple of both 2 and n.
+    public int smallestEvenMultiple(int n) {
+        return n % 2 == 0 ? n : n * 2;
+    }
+
+    public static boolean judgeCircle(String moves) {
+        int l = 0;
+        int r = 0;
+        int d = 0;
+        int u = 0;
+        for (int i = 0; i < moves.length(); i++) {
+            if (moves.charAt(i) == 'U') u++;
+            else if (moves.charAt(i) == 'D') d--;
+            else if (moves.charAt(i) == 'L') l++;
+            else if (moves.charAt(i) == 'R') r--;
+        }
+
+        return (l + r == 0) && (d + u == 0);
+    }
+
+    // Given an integer num, return the number of digits in num that divide num.
+    //
+    //An integer val divides nums if nums % val == 0.
+    public static int countDigits(int num) {
+        String[] numsArray = String.valueOf(num).split("");
+        int result = 0;
+        for (String numA: numsArray) {
+            if (num % Integer.valueOf(numA) == 0) result++;
+        }
+        return result;
     }
 
     public static void main(String[] args) {
