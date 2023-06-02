@@ -806,6 +806,59 @@ public class Main {
         return result;
     }
 
+    // Given a positive integer num, return the number of positive integers less than or equal to num whose digit sums are even.
+    //
+    //The digit sum of a positive integer is the sum of all its digits.
+    public static int countEven(int num) {
+        int result = 0;
+        for(int i = 1; i <= num; i++) {
+            if (Arrays.stream(String.valueOf(i).split("")).mapToInt(Integer::valueOf).sum() % 2 == 0) {
+                result++;
+            }
+        }
+        return result;
+    }
+
+    // Return the capitalized title.
+    public static String capitalizeTitle(String title) {
+        StringBuilder sb = new StringBuilder();
+        String[] titleArray = title.split(" ");
+        for (String t: titleArray) {
+            if (t.length() < 3) sb.append(" ").append(t.toLowerCase());
+            else {
+                sb.append(" ").append(Character.toUpperCase(t.charAt(0))).append(t.substring(1).toLowerCase());
+            }
+        }
+        return sb.toString().trim();
+    }
+
+    // Given a string paragraph and a string array of the banned words banned,
+    // return the most frequent word that is not banned.
+    // It is guaranteed there is at least one word that is not banned, and that the answer is unique.
+    //
+    //The words in paragraph are case-insensitive and the answer should be returned in lowercase.
+    public static String mostCommonWord(String paragraph, String[] banned) {
+        paragraph = paragraph.replaceAll("[!?',;.]", " ");
+        paragraph = paragraph.replaceAll("\s+", " ");
+        String[] parArray = paragraph.split(" ");
+        Map<String, Integer> maxMap = new HashMap<>();
+        HashSet<String> unique = new HashSet<>(List.of(banned));
+        for (String par: parArray) {
+            par = par.toLowerCase();
+            if (!unique.contains(par)) {
+                if (maxMap.get(par) == null) {
+                    maxMap.put(par, 1);
+                } else {
+                    maxMap.put(par, maxMap.get(par) + 1);
+                }
+            }
+        }
+
+        return maxMap.keySet().stream()
+                .max(Comparator.comparing(maxMap::get))
+                .orElse(null);
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -842,6 +895,7 @@ public class Main {
         // System.out.println(strongPasswordCheckerII("-Aa1a1a1"));
         // System.out.println(isMonotonic(new int[]{1,2,2,3}));
         // System.out.println(lemonadeChange(new int[] {5,5,5,10,5,5,10,20,20,20}));
-        System.out.println(buddyStrings("aa", "aa"));
+       //  System.out.println(buddyStrings("aa", "aa"));
+       // System.out.println(mostCommonWord("Bob. hIt, baLl", new String[] {"bob", "hit"}));
     }
 }
