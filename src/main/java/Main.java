@@ -925,10 +925,9 @@ public class Main {
 
         for (Map.Entry<Integer, Integer> pair : map.entrySet()) {
             if (pair.getValue() == max && pair.getKey() < min) {
-                    min = pair.getKey();
-                    max = pair.getValue();
-            }
-            else if (pair.getValue() > max) {
+                min = pair.getKey();
+                max = pair.getValue();
+            } else if (pair.getValue() > max) {
                 min = pair.getKey();
                 max = pair.getValue();
             }
@@ -954,6 +953,39 @@ public class Main {
             sortedNames[i] = map.get(heights[sortedNames.length - 1 - i]);
         }
         return sortedNames;
+    }
+
+    // A sentence is a list of words that are separated by a single space with no leading or trailing spaces.
+    //
+    //You are given an array of strings sentences, where each sentences[i] represents a single sentence.
+    //
+    //Return the maximum number of words that appear in a single sentence.
+    public static int mostWordsFound(String[] sentences) {
+        return Arrays.stream(sentences).mapToInt(i -> i.split(" ").length).max().orElse(-1);
+    }
+
+    // Given a 0-indexed integer array nums, return the smallest index i of nums such that i mod 10 == nums[i],
+    // or -1 if such index does not exist.
+    public static int smallestEqual(int[] nums) {
+        for (int i = 0; i < nums.length; i++) {
+            if (i % 10 == nums[i]) return i;
+        }
+        return -1;
+    }
+
+    // Given an integer n, add a dot (".") as the thousands separator and return it in string format.
+    public static String thousandSeparator(int n) {
+        if (n < 1000) return String.valueOf(n);
+        StringBuilder sb = new StringBuilder();
+        while (n > 0) {
+            String test = String.valueOf(n % 1000);
+            if (test.length() == 1) test = "00" + test;
+            else if (test.length() == 0) test = "000";
+            else if (test.length() == 2) test = "0" + test;
+            sb.insert(0, test + '.');
+            n = n / 1000;
+        }
+        return sb.substring(0, sb.length() - 1).replaceAll("^0*", "");
     }
 
     public static void main(String[] args) {
@@ -994,6 +1026,7 @@ public class Main {
         // System.out.println(lemonadeChange(new int[] {5,5,5,10,5,5,10,20,20,20}));
         //  System.out.println(buddyStrings("aa", "aa"));
         // System.out.println(mostCommonWord("Bob. hIt, baLl", new String[] {"bob", "hit"}));
-        System.out.println(mostFrequentEven(new int[]{0, 1, 2, 2, 4, 4, 1}));
+        // System.out.println(mostFrequentEven(new int[]{0, 1, 2, 2, 4, 4, 1}));
+        System.out.println(thousandSeparator(51040));
     }
 }
