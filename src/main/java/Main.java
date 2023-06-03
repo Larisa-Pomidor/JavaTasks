@@ -800,7 +800,7 @@ public class Main {
     public static int countDigits(int num) {
         String[] numsArray = String.valueOf(num).split("");
         int result = 0;
-        for (String numA: numsArray) {
+        for (String numA : numsArray) {
             if (num % Integer.valueOf(numA) == 0) result++;
         }
         return result;
@@ -811,7 +811,7 @@ public class Main {
     //The digit sum of a positive integer is the sum of all its digits.
     public static int countEven(int num) {
         int result = 0;
-        for(int i = 1; i <= num; i++) {
+        for (int i = 1; i <= num; i++) {
             if (Arrays.stream(String.valueOf(i).split("")).mapToInt(Integer::valueOf).sum() % 2 == 0) {
                 result++;
             }
@@ -823,7 +823,7 @@ public class Main {
     public static String capitalizeTitle(String title) {
         StringBuilder sb = new StringBuilder();
         String[] titleArray = title.split(" ");
-        for (String t: titleArray) {
+        for (String t : titleArray) {
             if (t.length() < 3) sb.append(" ").append(t.toLowerCase());
             else {
                 sb.append(" ").append(Character.toUpperCase(t.charAt(0))).append(t.substring(1).toLowerCase());
@@ -843,7 +843,7 @@ public class Main {
         String[] parArray = paragraph.split(" ");
         Map<String, Integer> maxMap = new HashMap<>();
         HashSet<String> unique = new HashSet<>(List.of(banned));
-        for (String par: parArray) {
+        for (String par : parArray) {
             par = par.toLowerCase();
             if (!unique.contains(par)) {
                 if (maxMap.get(par) == null) {
@@ -857,6 +857,103 @@ public class Main {
         return maxMap.keySet().stream()
                 .max(Comparator.comparing(maxMap::get))
                 .orElse(null);
+    }
+
+    // Given an integer n, return true if it is a power of two. Otherwise, return false.
+    //
+    //An integer n is a power of two, if there exists an integer x such that n == 2x.
+    public static boolean isPowerOfTwo(int n) {
+        if (n == 0) return false;
+        while (n % 2 == 0) {
+            n /= 2;
+        }
+
+        return n == 1;
+    }
+
+    // Given an integer array nums, return true if any value appears at least twice in the array,
+    // and return false if every element is distinct.
+    public static boolean containsDuplicate(int[] nums) {
+        return nums.length == IntStream.of(nums).collect(HashSet::new, HashSet::add, HashSet::addAll).size();
+    }
+
+    // You are given an integer array prices representing the prices of various chocolates in a store.
+    // You are also given a single integer money, which represents your initial amount of money.
+    //
+    //You must buy exactly two chocolates in such a way that you still have some non-negative leftover money.
+    // You would like to minimize the sum of the prices of the two chocolates you buy.
+    public static int buyChoco(int[] prices, int money) {
+        int i;
+        int j = 0;
+        for (i = 0; i < prices.length; i++) {
+            for (j = i + 1; j < prices.length; j++) {
+                if (prices[i] + prices[j] <= money)
+                    return money;
+            }
+        }
+        return money - prices[i] - prices[j];
+    }
+
+    // Return the number of passengers who are strictly more than 60 years old.
+    public static int countSeniors(String[] details) {
+        int result = 0;
+        for (String person : details) {
+            if (Integer.parseInt(person.substring(11, 13)) > 60) result++;
+        }
+        return result;
+    }
+
+    // You should convert Celsius into Kelvin and Fahrenheit and return it as an array ans = [kelvin, fahrenheit].
+    public static double[] convertTemperature(double celsius) {
+        return new double[]{celsius + 273.15,
+                celsius * 1.80 + 32.00};
+    }
+
+    // Given an integer array nums, return the most frequent even element.
+    //
+    //If there is a tie, return the smallest one. If there is no such element, return -1.
+    public static int mostFrequentEven(int[] nums) {
+        if (nums.length == 1) return nums[0] % 2 == 0 ? nums[0] : -1;
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int num : nums) {
+            if (num % 2 == 0)
+                map.put(num, map.get(num) == null ? 1 : map.get(num) + 1);
+        }
+
+        int min = -1;
+        int max = 0;
+
+        for (Map.Entry<Integer, Integer> pair : map.entrySet()) {
+            if (pair.getValue() == max && pair.getKey() < min) {
+                    min = pair.getKey();
+                    max = pair.getValue();
+            }
+            else if (pair.getValue() > max) {
+                min = pair.getKey();
+                max = pair.getValue();
+            }
+        }
+        return min;
+    }
+
+    // You are given an array of strings names, and an array heights that consists of distinct positive integers.
+    // Both arrays are of length n.
+    //
+    //For each index i, names[i] and heights[i] denote the name and height of the ith person.
+    //
+    //Return names sorted in descending order by the people's heights.
+    public static String[] sortPeople(String[] names, int[] heights) {
+        HashMap<Integer, String> map = new HashMap<>();
+        for (int i = 0; i < names.length; i++) {
+            map.put(heights[i], names[i]);
+        }
+        Arrays.sort(heights);
+
+        String[] sortedNames = new String[names.length];
+        for (int i = sortedNames.length - 1; i >= 0; i--) {
+            sortedNames[i] = map.get(heights[sortedNames.length - 1 - i]);
+        }
+        return sortedNames;
     }
 
     public static void main(String[] args) {
@@ -895,7 +992,8 @@ public class Main {
         // System.out.println(strongPasswordCheckerII("-Aa1a1a1"));
         // System.out.println(isMonotonic(new int[]{1,2,2,3}));
         // System.out.println(lemonadeChange(new int[] {5,5,5,10,5,5,10,20,20,20}));
-       //  System.out.println(buddyStrings("aa", "aa"));
-       // System.out.println(mostCommonWord("Bob. hIt, baLl", new String[] {"bob", "hit"}));
+        //  System.out.println(buddyStrings("aa", "aa"));
+        // System.out.println(mostCommonWord("Bob. hIt, baLl", new String[] {"bob", "hit"}));
+        System.out.println(mostFrequentEven(new int[]{0, 1, 2, 2, 4, 4, 1}));
     }
 }
