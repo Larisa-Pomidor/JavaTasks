@@ -762,8 +762,7 @@ public class Main {
         commonElements(new HashSet<>(Arrays.stream(nums3).boxed().toList()), commonMap);
 
         for (Map.Entry<Integer, Integer> commonEl : commonMap.entrySet()) {
-            if (commonEl.getValue() >= 2)
-                result.add(commonEl.getKey());
+            if (commonEl.getValue() >= 2) result.add(commonEl.getKey());
         }
         return result;
     }
@@ -855,9 +854,7 @@ public class Main {
             }
         }
 
-        return maxMap.keySet().stream()
-                .max(Comparator.comparing(maxMap::get))
-                .orElse(null);
+        return maxMap.keySet().stream().max(Comparator.comparing(maxMap::get)).orElse(null);
     }
 
     // Given an integer n, return true if it is a power of two. Otherwise, return false.
@@ -888,8 +885,7 @@ public class Main {
         int j = 0;
         for (i = 0; i < prices.length; i++) {
             for (j = i + 1; j < prices.length; j++) {
-                if (prices[i] + prices[j] <= money)
-                    return money;
+                if (prices[i] + prices[j] <= money) return money;
             }
         }
         return money - prices[i] - prices[j];
@@ -906,8 +902,7 @@ public class Main {
 
     // You should convert Celsius into Kelvin and Fahrenheit and return it as an array ans = [kelvin, fahrenheit].
     public static double[] convertTemperature(double celsius) {
-        return new double[]{celsius + 273.15,
-                celsius * 1.80 + 32.00};
+        return new double[]{celsius + 273.15, celsius * 1.80 + 32.00};
     }
 
     // Given an integer array nums, return the most frequent even element.
@@ -917,8 +912,7 @@ public class Main {
         if (nums.length == 1) return nums[0] % 2 == 0 ? nums[0] : -1;
         Map<Integer, Integer> map = new HashMap<>();
         for (int num : nums) {
-            if (num % 2 == 0)
-                map.put(num, map.get(num) == null ? 1 : map.get(num) + 1);
+            if (num % 2 == 0) map.put(num, map.get(num) == null ? 1 : map.get(num) + 1);
         }
 
         int min = -1;
@@ -1022,8 +1016,7 @@ public class Main {
                     if (!digits.isEmpty()) {
                         sb.append(digits.pop());
                         sb.append(s.charAt(i));
-                    } else
-                        letters.push(s.charAt(i));
+                    } else letters.push(s.charAt(i));
                 } else {
                     sb.append(s.charAt(i));
                     digit = false;
@@ -1033,8 +1026,7 @@ public class Main {
                     if (!letters.isEmpty()) {
                         sb.append(letters.pop());
                         sb.append(s.charAt(i));
-                    } else
-                        digits.push(s.charAt(i));
+                    } else digits.push(s.charAt(i));
                 } else {
                     sb.append(s.charAt(i));
                     digit = true;
@@ -1154,9 +1146,7 @@ public class Main {
         String str = n + String.valueOf(n * 2) + n * 3;
         if (str.contains("0")) return false;
         if (str.length() != 9) return false;
-        return str.contains("1") && str.contains("2") && str.contains("3") &&
-                str.contains("4") && str.contains("5") && str.contains("6") &&
-                str.contains("7") && str.contains("8") && str.contains("9");
+        return str.contains("1") && str.contains("2") && str.contains("3") && str.contains("4") && str.contains("5") && str.contains("6") && str.contains("7") && str.contains("8") && str.contains("9");
     }
 
     public static int numJewelsInStones(String jewels, String stones) {
@@ -1179,12 +1169,15 @@ public class Main {
         boolean last = false;
 
         for (int place = 0; place < flowerbed.length; place++) {
-            if (place == flowerbed.length - 1 && flowerbed[place] == 0) { last = true; empty++; }
+            if (place == flowerbed.length - 1 && flowerbed[place] == 0) {
+                last = true;
+                empty++;
+            }
             if (flowerbed[place] == 0 && !last) empty++;
             else {
                 if (start && last) n = n - (empty + 1) / 2;
                 else if (start || last) n = n - empty / 2;
-                else  n = n - Integer.valueOf((empty - 1) / 2);
+                else n = n - Integer.valueOf((empty - 1) / 2);
                 if (n <= 0) return true;
                 empty = 0;
                 start = false;
@@ -1192,6 +1185,24 @@ public class Main {
         }
 
         return n <= 0;
+    }
+
+    // Given an array points where points[i] = [xi, yi] represents a point on the X-Y plane, return true if these points are a boomerang.
+    //
+    //A boomerang is a set of three points that are all distinct and not in a straight line.
+    public static boolean isBoomerang(int[][] points) {
+        if (points.length >= 2) {
+            if (points[0][0] == points[1][0] && points[0][1] == points[1][1]) return false;
+        }
+
+        if (points.length == 2) return true;
+
+        for (int i = 2; i < points.length; i++) {
+            if ((Double.valueOf(points[i][0] - points[0][0]) * Double.valueOf(points[1][1] - points[0][1]) ==
+                    Double.valueOf(points[1][0] - points[0][0]) * Double.valueOf((points[i][1] - points[0][1]))))
+                return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -1243,6 +1254,7 @@ public class Main {
         // checkIfExist(new int[]{7, 1, 14, 11});
         // findWords(new String[] {"Aasdfghjkl","Qwertyuiop","zZxcvbnm"});
         // isFascinating(783);
-        canPlaceFlowers(new int[] {0, 0}, 1);
+        // canPlaceFlowers(new int[]{0, 0}, 1);
+        isBoomerang(new int[][]{{0, 1}, {1, 1}, {2, 1}});
     }
 }
