@@ -988,6 +988,78 @@ public class Main {
         return sb.substring(0, sb.length() - 1).replaceAll("^0*", "");
     }
 
+    // You are given an integer n and an integer start.
+    //
+    //Define an array nums where nums[i] = start + 2 * i (0-indexed) and n == nums.length.
+    //
+    //Return the bitwise XOR of all elements of nums.
+    public static int xorOperation(int n, int start) {
+        int result = 0;
+
+        for (int i = 0; i < n; i++) {
+            result ^= start + 2 * i;
+        }
+        return result;
+    }
+
+    // You have to find a permutation of the string where no letter is followed by another letter
+    // and no digit is followed by another digit.
+    // That is, no two adjacent characters have the same type.
+    //
+    //Return the reformatted string or return an empty string if it is impossible to reformat the string.
+    public static String reformat(String s) {
+        if (s.length() == 1) return s;
+        Deque<Character> letters = new ArrayDeque<>();
+        Deque<Character> digits = new ArrayDeque<>();
+        StringBuilder sb = new StringBuilder();
+
+        boolean digit = true;
+
+        for (int i = 0; i < s.length(); i++) {
+            if (digit) {
+                if (Character.isAlphabetic(s.charAt(i))) {
+                    if (!digits.isEmpty()) {
+                        sb.append(digits.pop());
+                        sb.append(s.charAt(i));
+                    } else
+                        letters.push(s.charAt(i));
+                } else {
+                    sb.append(s.charAt(i));
+                    digit = false;
+                }
+            } else {
+                if (!Character.isAlphabetic(s.charAt(i))) {
+                    if (!letters.isEmpty()) {
+                        sb.append(letters.pop());
+                        sb.append(s.charAt(i));
+                    } else
+                        digits.push(s.charAt(i));
+                } else {
+                    sb.append(s.charAt(i));
+                    digit = true;
+                }
+            }
+        }
+
+        while (!letters.isEmpty() || !digits.isEmpty()) {
+            if (digit && digits.isEmpty()) {
+                if (letters.size() == 1 && !Character.isAlphabetic(sb.charAt(0))) {
+                    sb.insert(0, letters.pop());
+                    break;
+                } else return "";
+            }
+            if (!digit && letters.isEmpty()) {
+                if (digits.size() == 1 && Character.isAlphabetic(sb.charAt(0))) {
+                    sb.insert(0, digits.pop());
+                    break;
+                } else return "";
+            }
+            sb.append(!digit ? letters.pop() : digits.pop());
+            digit = !digit;
+        }
+        return (!letters.isEmpty() || !digits.isEmpty()) ? "" : sb.toString();
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1008,7 +1080,7 @@ public class Main {
         // System.out.println(makeComplement("TACGACT"));
         // System.out.println(plusOne(new int[] {9}));
         // System.out.println(thirdMax(new int[]{1, 2, 2, 3}));
-//        Arrays.stream(moveZeroes(new int[]{0, 1, 0, 3, 12})).forEach(System.out::print);
+        // Arrays.stream(moveZeroes(new int[]{0, 1, 0, 3, 12})).forEach(System.out::print);
 //        swapNodes(new ListNode(1, new ListNode(2, new ListNode(3, new ListNode(6)))), 2);
 //        ListNode jj = addTwoNumbers(new ListNode(9, new ListNode(9, new ListNode(9, new ListNode(9)))),
 //                new ListNode(9, new ListNode(9)));
@@ -1027,6 +1099,13 @@ public class Main {
         //  System.out.println(buddyStrings("aa", "aa"));
         // System.out.println(mostCommonWord("Bob. hIt, baLl", new String[] {"bob", "hit"}));
         // System.out.println(mostFrequentEven(new int[]{0, 1, 2, 2, 4, 4, 1}));
-        System.out.println(thousandSeparator(51040));
+//        System.out.println(thousandSeparator(51040));
+//        int a = 10;
+//        long b = a;
+//        a = (int) b;
+
+        System.out.println(reformat("covid2019"));
+
+
     }
 }
