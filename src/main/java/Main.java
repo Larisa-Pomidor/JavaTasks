@@ -1,6 +1,7 @@
 import com.sun.jdi.IntegerValue;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.stream.Collectors;
@@ -801,7 +802,7 @@ public class Main {
         String[] numsArray = String.valueOf(num).split("");
         int result = 0;
         for (String numA : numsArray) {
-            if (num % Integer.valueOf(numA) == 0) result++;
+            if (num % Integer.parseInt(numA) == 0) result++;
         }
         return result;
     }
@@ -1060,6 +1061,90 @@ public class Main {
         return (!letters.isEmpty() || !digits.isEmpty()) ? "" : sb.toString();
     }
 
+    // Given an array of integers arr, a lucky integer is an integer that has a frequency in the array equal to its value.
+    //
+    //Return the largest lucky integer in the array. If there is no lucky integer return -1.
+    public static int findLucky(int[] arr) {
+        Map<Integer, Integer> map = new TreeMap<>(Collections.reverseOrder());
+        for (int num : arr) {
+            map.put(num, map.get(num) == null ? 1 : map.get(num) + 1);
+        }
+
+        for (Map.Entry<Integer, Integer> pair : map.entrySet()) {
+            if (pair.getKey() == pair.getValue()) return pair.getKey();
+        }
+
+        return -1;
+    }
+
+    // Write a program to count the number of days between two dates.
+    //
+    //The two dates are given as strings, their format is YYYY-MM-DD as shown in the examples.
+    public static int daysBetweenDates(String date1, String date2) {
+        LocalDate ldt1 = LocalDate.parse(date1);
+        LocalDate ldt2 = LocalDate.parse(date2);
+        return Math.abs((int) ChronoUnit.DAYS.between(ldt1, ldt2));
+    }
+
+    // Given the array nums, for each nums[i] find out how many numbers in the array are smaller than it.
+    // That is, for each nums[i] you have to count the number of valid j's such that j != i and nums[j] < nums[i].
+    //
+    //Return the answer in an array.
+    public static int[] smallerNumbersThanCurrent(int[] nums) {
+        int[] result = new int[nums.length];
+        int count;
+        for (int i = 0; i < nums.length; i++) {
+            count = 0;
+            if (nums[i] == 0) result[i] = nums.length - i - 1;
+            else {
+                for (int num : nums) {
+                    if (nums[i] > num) count++;
+                }
+            }
+            result[i] = count;
+        }
+        return result;
+    }
+
+    // Given an array arr of integers, check if there exist two indices i and j such that :
+    //
+    //i != j
+    //0 <= i, j < arr.length
+    //arr[i] == 2 * arr[j]
+    public static boolean checkIfExist(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[i] == 2 * arr[j] || arr[j] == 2 * arr[i]) return true;
+            }
+        }
+        return false;
+    }
+
+    // Given an array of strings words,
+    // return the words that can be typed using letters of the alphabet on only one row of American keyboard like the image below.
+    public static String[] findWords(String[] words) {
+        String check;
+        boolean flag;
+        ArrayList<String> result = new ArrayList<>();
+
+        for (int i = 0; i < words.length; i++) {
+            flag = true;
+            if ("asdfghjkl".contains(words[i].substring(0, 1).toLowerCase())) check = "asdfghjkl";
+            else if ("zxcvbnm".contains(words[i].substring(0, 1).toLowerCase())) check = "zxcvbnm";
+            else check = "qwertyuiop";
+
+            for (int j = 1; j < words[i].length() - 1; j++) {
+                if (!check.contains(words[i].substring(j, j + 1).toLowerCase())) {
+                    flag = false;
+                    break;
+                }
+            }
+            if (flag) result.add(words[i]);
+        }
+
+        return result.toArray(new String[0]);
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1104,8 +1189,10 @@ public class Main {
 //        long b = a;
 //        a = (int) b;
 
-        System.out.println(reformat("covid2019"));
-
+        // System.out.println(reformat("covid2019"));
+        // findLucky(new int[]{1, 4, 2, 1, 2});
+       // checkIfExist(new int[]{7, 1, 14, 11});
+        findWords(new String[] {"Aasdfghjkl","Qwertyuiop","zZxcvbnm"});
 
     }
 }
