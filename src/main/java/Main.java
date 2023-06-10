@@ -1145,6 +1145,55 @@ public class Main {
         return result.toArray(new String[0]);
     }
 
+    // You are given an integer n that consists of exactly 3 digits.
+    //
+    //We call the number n fascinating if, after the following modification, the resulting number contains all the digits from 1 to 9 exactly once and does not contain any 0's:
+    //
+    //Concatenate n with the numbers 2 * n and 3 * n.
+    public static boolean isFascinating(int n) {
+        String str = n + String.valueOf(n * 2) + n * 3;
+        if (str.contains("0")) return false;
+        if (str.length() != 9) return false;
+        return str.contains("1") && str.contains("2") && str.contains("3") &&
+                str.contains("4") && str.contains("5") && str.contains("6") &&
+                str.contains("7") && str.contains("8") && str.contains("9");
+    }
+
+    public static int numJewelsInStones(String jewels, String stones) {
+        int result = 0;
+        for (int i = 0; i < jewels.length(); i++) {
+            for (int j = 0; j < stones.length(); j++) {
+                if (jewels.charAt(i) == stones.charAt(j)) result++;
+            }
+        }
+
+        return result;
+    }
+
+    // You have a long flowerbed in which some of the plots are planted, and some are not.
+    // However, flowers cannot be planted in adjacent plots.
+    public static boolean canPlaceFlowers(int[] flowerbed, int n) {
+        if (flowerbed.length == 1 && flowerbed[0] == 0 && n == 1) return true;
+        int empty = 0;
+        boolean start = true;
+        boolean last = false;
+
+        for (int place = 0; place < flowerbed.length; place++) {
+            if (place == flowerbed.length - 1 && flowerbed[place] == 0) { last = true; empty++; }
+            if (flowerbed[place] == 0 && !last) empty++;
+            else {
+                if (start && last) n = n - (empty + 1) / 2;
+                else if (start || last) n = n - empty / 2;
+                else  n = n - Integer.valueOf((empty - 1) / 2);
+                if (n <= 0) return true;
+                empty = 0;
+                start = false;
+            }
+        }
+
+        return n <= 0;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1191,8 +1240,9 @@ public class Main {
 
         // System.out.println(reformat("covid2019"));
         // findLucky(new int[]{1, 4, 2, 1, 2});
-       // checkIfExist(new int[]{7, 1, 14, 11});
-        findWords(new String[] {"Aasdfghjkl","Qwertyuiop","zZxcvbnm"});
-
+        // checkIfExist(new int[]{7, 1, 14, 11});
+        // findWords(new String[] {"Aasdfghjkl","Qwertyuiop","zZxcvbnm"});
+        // isFascinating(783);
+        canPlaceFlowers(new int[] {0, 0}, 1);
     }
 }
