@@ -1205,6 +1205,23 @@ public class Main {
         return true;
     }
 
+    // Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+    //
+    //An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase,
+    // typically using all the original letters exactly once.
+    public static boolean isAnagram(String s, String t) {
+        if (s.length() != t.length()) return false;
+        StringBuilder first = new StringBuilder(s);
+        StringBuilder second = new StringBuilder(t);
+        for (int i = 0; i < first.length(); i++) {
+            int index = second.indexOf(String.valueOf(first.charAt(i)));
+            if (index != -1)
+                second.deleteCharAt(index);
+            else return false;
+        }
+        return true;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1255,6 +1272,9 @@ public class Main {
         // findWords(new String[] {"Aasdfghjkl","Qwertyuiop","zZxcvbnm"});
         // isFascinating(783);
         // canPlaceFlowers(new int[]{0, 0}, 1);
-        isBoomerang(new int[][]{{0, 1}, {1, 1}, {2, 1}});
+        // isBoomerang(new int[][]{{0, 1}, {1, 1}, {2, 1}});
+
+
+
     }
 }
