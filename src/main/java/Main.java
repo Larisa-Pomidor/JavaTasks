@@ -1222,6 +1222,44 @@ public class Main {
         return true;
     }
 
+    // Given the root of a binary tree and an integer targetSum,
+    // return true if the tree has a root-to-leaf path such that adding up all the values along the path equals targetSum.
+    //
+    //A leaf is a node with no children.
+    public static boolean hasPathSum(TreeNode root, int targetSum) {
+        if (root == null) return false;
+        if (root.left == null && root.right == null && targetSum - root.val == 0)
+            return true;
+        return hasPathSum(root.left, targetSum - root.val) ||
+                hasPathSum(root.right, targetSum - root.val);
+    }
+
+    public static int sumOfFibonacciNumbers(int n) {
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+
+        int result = 1;
+        int last = 1;
+        int currentSumm;
+        int lastLast = 0;
+        for (int i = 2; i < n + 1; i++) {
+            currentSumm = last + lastLast;
+            lastLast = last;
+            last = currentSumm;
+            result += currentSumm;
+        }
+        return result;
+    }
+
+    public static int sumOfFibonacciNumbersRecursion(int n) {
+        if (n == 0)
+            return 0;
+        if (n == 1)
+            return 1;
+        return sumOfFibonacciNumbersRecursion(n-1) + sumOfFibonacciNumbersRecursion(n-2) + 1;
+    }
+
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1274,7 +1312,13 @@ public class Main {
         // canPlaceFlowers(new int[]{0, 0}, 1);
         // isBoomerang(new int[][]{{0, 1}, {1, 1}, {2, 1}});
 
+//        hasPathSum(new TreeNode(5,
+//                        new TreeNode(4, new TreeNode(11, new TreeNode(7), new TreeNode(2)), null),
+//                        new TreeNode(8, new TreeNode(13), new TreeNode(4, null, new TreeNode(1)))),
+//                22);
 
+         System.out.println(sumOfFibonacciNumbers(11));
+        System.out.println(sumOfFibonacciNumbersRecursion(11));
 
     }
 }
