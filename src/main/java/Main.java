@@ -1293,6 +1293,29 @@ public class Main {
         return Collections.min(div);
     }
 
+    // Return the number of strings in words that are a prefix of s.
+    public static int countPrefixes(String[] words, String s) {
+        return (int) Arrays.stream(words).map(s::startsWith).count();
+    }
+
+    // Given an integer num, reverse num to get reversed1, then reverse reversed1 to get reversed2.
+    // Return true if reversed2 equals num. Otherwise return false.
+    public static boolean isSameAfterReversals(int num) {
+        if (num == 0) return true;
+        return num % 10 != 0;
+    }
+
+    // Given a 0-indexed integer array nums of length n and an integer k, return the number of pairs (i, j) where 0 <= i < j < n,
+    // such that nums[i] == nums[j] and (i * j) is divisible by k.
+    public static int countPairs(int[] nums, int k) {
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (nums[i] == nums[j] && i * j % k == 0) result++;
+            }
+        }
+        return result;
+    }
 
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
