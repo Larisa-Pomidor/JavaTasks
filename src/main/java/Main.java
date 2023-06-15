@@ -1259,6 +1259,40 @@ public class Main {
         return sumOfFibonacciNumbersRecursion(n-1) + sumOfFibonacciNumbersRecursion(n-2) + 1;
     }
 
+    // Given a positive integer n, find the sum of all integers in the range [1, n] inclusive that are divisible by 3, 5, or 7.
+    //
+    //Return an integer denoting the sum of all numbers in the given range satisfying the constraint.
+    public static int sumOfMultiples(int n) {
+        if (n < 3) return 0;
+        int sum = 0;
+        for (int i = 3; i <= n; i++) {
+            if (i % 3 == 0 || i % 5 == 0 || i % 7 == 0) sum += i;
+        }
+        return sum;
+    }
+
+    // Return the integer divisors[i] with the maximum divisibility score.
+    // If there is more than one integer with the maximum score, return the minimum of them.
+    public static int maxDivScore(int[] nums, int[] divisors) {
+        ArrayList <Integer> div = new ArrayList<>();
+        int max = 0;
+        int maxCur;
+        for (int divisor : divisors) {
+            maxCur = 0;
+            for (int num : nums) {
+                if (num % divisor == 0) maxCur++;
+            }
+            if (maxCur > max) {
+                max = maxCur;
+                div.clear();
+                div.add(divisor);
+            } else if (maxCur == max) {
+                div.add(divisor);
+            }
+        }
+        return Collections.min(div);
+    }
+
 
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
@@ -1316,9 +1350,9 @@ public class Main {
 //                        new TreeNode(4, new TreeNode(11, new TreeNode(7), new TreeNode(2)), null),
 //                        new TreeNode(8, new TreeNode(13), new TreeNode(4, null, new TreeNode(1)))),
 //                22);
-
-         System.out.println(sumOfFibonacciNumbers(11));
-        System.out.println(sumOfFibonacciNumbersRecursion(11));
+//
+//         System.out.println(sumOfFibonacciNumbers(11));
+//        System.out.println(sumOfFibonacciNumbersRecursion(11));
 
     }
 }
