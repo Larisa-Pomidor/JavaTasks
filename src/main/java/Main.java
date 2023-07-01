@@ -1198,8 +1198,7 @@ public class Main {
         if (points.length == 2) return true;
 
         for (int i = 2; i < points.length; i++) {
-            if ((Double.valueOf(points[i][0] - points[0][0]) * Double.valueOf(points[1][1] - points[0][1]) ==
-                    Double.valueOf(points[1][0] - points[0][0]) * Double.valueOf((points[i][1] - points[0][1]))))
+            if ((Double.valueOf(points[i][0] - points[0][0]) * Double.valueOf(points[1][1] - points[0][1]) == Double.valueOf(points[1][0] - points[0][0]) * Double.valueOf((points[i][1] - points[0][1]))))
                 return false;
         }
         return true;
@@ -1215,8 +1214,7 @@ public class Main {
         StringBuilder second = new StringBuilder(t);
         for (int i = 0; i < first.length(); i++) {
             int index = second.indexOf(String.valueOf(first.charAt(i)));
-            if (index != -1)
-                second.deleteCharAt(index);
+            if (index != -1) second.deleteCharAt(index);
             else return false;
         }
         return true;
@@ -1228,10 +1226,8 @@ public class Main {
     //A leaf is a node with no children.
     public static boolean hasPathSum(TreeNode root, int targetSum) {
         if (root == null) return false;
-        if (root.left == null && root.right == null && targetSum - root.val == 0)
-            return true;
-        return hasPathSum(root.left, targetSum - root.val) ||
-                hasPathSum(root.right, targetSum - root.val);
+        if (root.left == null && root.right == null && targetSum - root.val == 0) return true;
+        return hasPathSum(root.left, targetSum - root.val) || hasPathSum(root.right, targetSum - root.val);
     }
 
     public static int sumOfFibonacciNumbers(int n) {
@@ -1252,11 +1248,9 @@ public class Main {
     }
 
     public static int sumOfFibonacciNumbersRecursion(int n) {
-        if (n == 0)
-            return 0;
-        if (n == 1)
-            return 1;
-        return sumOfFibonacciNumbersRecursion(n-1) + sumOfFibonacciNumbersRecursion(n-2) + 1;
+        if (n == 0) return 0;
+        if (n == 1) return 1;
+        return sumOfFibonacciNumbersRecursion(n - 1) + sumOfFibonacciNumbersRecursion(n - 2) + 1;
     }
 
     // Given a positive integer n, find the sum of all integers in the range [1, n] inclusive that are divisible by 3, 5, or 7.
@@ -1274,7 +1268,7 @@ public class Main {
     // Return the integer divisors[i] with the maximum divisibility score.
     // If there is more than one integer with the maximum score, return the minimum of them.
     public static int maxDivScore(int[] nums, int[] divisors) {
-        ArrayList <Integer> div = new ArrayList<>();
+        ArrayList<Integer> div = new ArrayList<>();
         int max = 0;
         int maxCur;
         for (int divisor : divisors) {
@@ -1295,7 +1289,7 @@ public class Main {
 
     // Return the number of strings in words that are a prefix of s.
     public static int countPrefixes(String[] words, String s) {
-        return (int) Arrays.stream(words).map(s::startsWith).count();
+        return (int) Arrays.stream(words).filter(s::startsWith).count();
     }
 
     // Given an integer num, reverse num to get reversed1, then reverse reversed1 to get reversed2.
@@ -1312,6 +1306,40 @@ public class Main {
         for (int i = 0; i < nums.length; i++) {
             for (int j = i + 1; j < nums.length; j++) {
                 if (nums[i] == nums[j] && i * j % k == 0) result++;
+            }
+        }
+        return result;
+    }
+
+    // Given a string array words, return an array of all characters that show up in all strings within the words (including duplicates).
+    // You may return the answer in any order.
+    public static List<String> commonChars(String[] words) {
+        if (words.length == 1) return Arrays.asList(words[0].split(""));
+        ArrayList<Map<Character, Integer>> letters = new ArrayList<>();
+        for (String w : words) {
+            Map<Character, Integer> map = new HashMap<>();
+            for (int i = 0; i < w.length(); i++) {
+                map.put(w.charAt(i), map.get(w.charAt(i)) == null ? 1 : map.get(w.charAt(i)) + 1);
+            }
+            letters.add(map);
+        }
+        List<String> result = new ArrayList<>();
+        int k;
+        for (Map.Entry<Character, Integer> l: letters.get(0).entrySet()){
+            k = l.getValue();
+            for (int j = 1; j < letters.size(); j++) {
+                Integer value = letters.get(j).get(l.getKey());
+                if (value != null) {
+                    if (value < k)
+                        k = value;
+                }
+                else {
+                    k = 0;
+                    break;
+                }
+            }
+            for (int m = 0; m < k; m++) {
+                result.add(String.valueOf(l.getKey()));
             }
         }
         return result;
@@ -1375,7 +1403,10 @@ public class Main {
 //                22);
 //
 //         System.out.println(sumOfFibonacciNumbers(11));
-//        System.out.println(sumOfFibonacciNumbersRecursion(11));
+        //System.out.println(sumOfFibonacciNumbersRecursion(7));
+        // System.out.println(10 + 33 % 5 * 7 / 3 % 4 + 3 );
+
+       commonChars(new String[] {"dadaabaa","bdaaabcc","abccddbb","bbaacdba","ababbbab","ccddbbba","bbdabbda","bdabaacb"});
 
     }
 }
