@@ -1425,6 +1425,40 @@ public class Main {
         return true;
     }
 
+    public static int strStr(String haystack, String needle) {
+        return haystack.indexOf(needle);
+    }
+
+    public static int addDigits(int num) {
+        int result = num;
+
+        while (result > 9) {
+            result = 0;
+            while (num != 0) {
+                result += num % 10;
+                num /= 10;
+            }
+            num = result;
+        }
+        return result;
+    }
+
+    public static String reverseVowels(String s) {
+        String vowels = s.replaceAll("[^auioeAUIOE]", "");
+        StringBuilder sb = new StringBuilder(s);
+        int index = vowels.length() - 1;
+        for (int i = 0; i < sb.length(); i++) {
+            if (sb.charAt(i) == 'a' || sb.charAt(i) == 'u' || sb.charAt(i) == 'i' ||
+                    sb.charAt(i) == 'o' || sb.charAt(i) == 'e' ||
+                    sb.charAt(i) == 'A' || sb.charAt(i) == 'U' || sb.charAt(i) == 'I' ||
+                    sb.charAt(i) == 'O' || sb.charAt(i) == 'E') {
+                sb.setCharAt(i, vowels.charAt(index));
+                index--;
+            }
+        }
+        return sb.toString();
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1491,6 +1525,7 @@ public class Main {
         // growingPlant(68, 33, 96);
         // lengthOfLastWord("Hello World");
 
-        isPalindrome("A man, a plan, a canal: Panama");
+        // isPalindrome("A man, a plan, a canal: Panama");
+        addDigits(111);
     }
 }
