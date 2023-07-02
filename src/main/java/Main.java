@@ -1,9 +1,12 @@
 import com.sun.jdi.IntegerValue;
 
+import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.*;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -1325,15 +1328,14 @@ public class Main {
         }
         List<String> result = new ArrayList<>();
         int k;
-        for (Map.Entry<Character, Integer> l: letters.get(0).entrySet()){
+        for (Map.Entry<Character, Integer> l : letters.get(0).entrySet()) {
             k = l.getValue();
             for (int j = 1; j < letters.size(); j++) {
                 Integer value = letters.get(j).get(l.getKey());
                 if (value != null) {
                     if (value < k)
                         k = value;
-                }
-                else {
+                } else {
                     k = 0;
                     break;
                 }
@@ -1343,6 +1345,84 @@ public class Main {
             }
         }
         return result;
+    }
+
+    public static double doubles2(int maxk, int maxn) {
+        BigDecimal result = BigDecimal.valueOf(0);
+        for (int k = 1; k <= maxk; k++) {
+            for (int n = 1; n <= maxn; n++) {
+                result.add(BigDecimal.valueOf(1.0 / (k * Math.pow(n + 1, 2 * k))));
+            }
+        }
+        return result.doubleValue();
+    }
+
+    public static double doubles(int maxk, int maxn) {
+        double result = 0;
+        for (int k = 1; k <= maxk; k++) {
+            result += u(k, maxn);
+        }
+        return result;
+    }
+
+    public static double v(int k, int n) {
+        return 1.0 / (k * Math.pow(n + 1, 2 * k));
+    }
+
+    public static double u(int k, int N) {
+        double result = 0;
+        for (int n = 1; n <= N; n++) {
+            result += v(k, n);
+        }
+        return result;
+    }
+
+    public static int growingPlant(int upSpeed, int downSpeed, int desiredHeight) {
+        return (int) (Math.ceil(Double.valueOf((desiredHeight - upSpeed) / Double.valueOf(upSpeed - downSpeed))) + 1);
+    }
+
+    public static int majorityElement(int[] nums) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int n : nums) {
+            map.put(n, map.get(n) == null ? 1 : map.get(n) + 1);
+        }
+        for (Map.Entry<Integer, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > nums.length / 2) return entry.getKey();
+        }
+        return 0;
+    }
+
+    public static String addBinary(String a, String b) {
+        BigInteger aBig = new BigInteger(a, 2);
+        BigInteger bBig = new BigInteger(b, 2);
+        aBig = aBig.add(bBig);
+        return aBig.toString(2);
+
+    }
+
+    public static int lengthOfLastWord(String s) {
+        s = s.strip();
+        int result = 0;
+        for (int i = s.length() - 1; i >= 0; i--) {
+            if (!String.valueOf(s.charAt(i)).isBlank()) {
+                result++;
+            } else return result;
+        }
+        return result;
+    }
+
+    public static int searchInsert(int[] nums, int target) {
+        int position = Arrays.binarySearch(nums, target);
+        return position > 0 ? position : -position - 1;
+    }
+
+    public static boolean isPalindrome(String s) {
+        s = s.replaceAll("[^a-zA-Z0-9]", "");
+        s = s.toLowerCase();
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(s.length() - 1 - i)) return false;
+        }
+        return true;
     }
 
     public static void main(String[] args) {
@@ -1406,7 +1486,11 @@ public class Main {
         //System.out.println(sumOfFibonacciNumbersRecursion(7));
         // System.out.println(10 + 33 % 5 * 7 / 3 % 4 + 3 );
 
-       commonChars(new String[] {"dadaabaa","bdaaabcc","abccddbb","bbaacdba","ababbbab","ccddbbba","bbdabbda","bdabaacb"});
+        // commonChars(new String[] {"dadaabaa","bdaaabcc","abccddbb","bbaacdba","ababbbab","ccddbbba","bbdabbda","bdabaacb"});
+        // System.out.println(doubles(1, 10000));
+        // growingPlant(68, 33, 96);
+        // lengthOfLastWord("Hello World");
 
+        isPalindrome("A man, a plan, a canal: Panama");
     }
 }
