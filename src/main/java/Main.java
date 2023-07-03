@@ -1488,6 +1488,16 @@ public class Main {
         return false;
     }
 
+    public static int findComplement(int num) {
+        StringBuilder binary = new StringBuilder(Integer.toBinaryString(num));
+        for (int i = 0; i < binary.length(); i++) {
+            if (binary.charAt(i) == '0')
+                binary.setCharAt(i, '1');
+            else binary.setCharAt(i, '0');
+        }
+       return Integer.parseInt(binary.toString(),2);
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
