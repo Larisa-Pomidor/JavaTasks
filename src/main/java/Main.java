@@ -1459,6 +1459,20 @@ public class Main {
         return sb.toString();
     }
 
+    public static List<Integer> findDisappearedNumbers(int[] nums) {
+        Set<Integer> set = new HashSet<>();
+        for (int val : nums) {
+            set.add(val);
+        }
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i <= nums.length; i++) {
+            if (!set.contains(i)) {
+                list.add(i);
+            }
+        }
+        return list;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1526,6 +1540,6 @@ public class Main {
         // lengthOfLastWord("Hello World");
 
         // isPalindrome("A man, a plan, a canal: Panama");
-        addDigits(111);
+        // addDigits(111);
     }
 }
