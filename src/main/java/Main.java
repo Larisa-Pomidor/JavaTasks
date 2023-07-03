@@ -1473,6 +1473,21 @@ public class Main {
         return list;
     }
 
+    public static boolean repeatedSubstringPattern(String s) {
+        if (s.length() == 1) return false;
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.substring(0, i + 1).repeat(s.length() / (i + 1)).equals(s)) return true;
+        }
+        return false;
+    }
+
+    public static boolean repeatedSubstringPattern2(String s) {
+        for (int i = 0; i < s.length() / 2 + 1; i++) {
+            if (s.replaceAll("^(" + s.substring(0, i + 1) + ")+$", "").isEmpty()) return true;
+        }
+        return false;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1541,5 +1556,6 @@ public class Main {
 
         // isPalindrome("A man, a plan, a canal: Panama");
         // addDigits(111);
+        repeatedSubstringPattern("ab");
     }
 }
