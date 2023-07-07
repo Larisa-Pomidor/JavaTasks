@@ -1495,7 +1495,19 @@ public class Main {
                 binary.setCharAt(i, '1');
             else binary.setCharAt(i, '0');
         }
-       return Integer.parseInt(binary.toString(),2);
+        return Integer.parseInt(binary.toString(), 2);
+    }
+
+    public static int[] findErrorNums(int[] nums) {
+        Arrays.sort(nums);
+        int loss = nums[0] != 1 ? 1 : nums.length;
+        int repeat = -1;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] == nums[i + 1]) repeat = nums[i];
+            else if (nums[i] + 2 == nums[i + 1]) loss = nums[i] + 1;
+        }
+        if (loss == repeat) loss = 2;
+        return new int[]{repeat, loss};
     }
 
     public static void main(String[] args) {
