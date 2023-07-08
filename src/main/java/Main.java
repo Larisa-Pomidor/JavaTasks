@@ -1510,6 +1510,72 @@ public class Main {
         return new int[]{repeat, loss};
     }
 
+    public static int longestAlternatingSubarray(int[] nums, int threshold) {
+        if (nums.length == 1 && nums[0] % 2 == 0 && nums[0] <= threshold) return 1;
+        int maxLen = 0;
+        int currentLen = 0;
+        boolean start = true;
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (start && nums[i] % 2 == 0) start = false;
+            if (nums[i] <= threshold && !start) {
+                currentLen++;
+                if ((nums[i] % 2 == nums[i + 1] % 2 || nums[i + 1] > threshold)) {
+                    start = true;
+                    maxLen = Math.max(maxLen, currentLen);
+                    currentLen = 0;
+                }
+                if (i == nums.length - 2 && nums[i + 1] <= threshold && !start)
+                    currentLen++;
+            }
+            else {
+                start = true;
+                maxLen = Math.max(maxLen, currentLen);
+                currentLen = 0;
+            }
+        }
+        currentLen = Math.max(maxLen, currentLen);
+        if (currentLen == 0 && nums[nums.length - 1] % 2 == 0 && nums[nums.length - 1] <= threshold) return 1;
+        return currentLen;
+    }
+
+    public static int countBeautifulPairs(int[] nums) {
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                if (gcd(Integer.parseInt(Integer.toString(nums[i]).substring(0, 1)), nums[j] % 10) == 1) result++;
+            }
+        }
+        return result;
+    }
+
+    public static int gcd(int n1, int n2) {
+        if (n2 == 0) {
+            return n1;
+        }
+        return gcd(n2, n1 % n2);
+    }
+
+    public static int maximumNumberOfStringPairs(String[] words) {
+        int result = 0;
+        StringBuilder sb;
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                sb = new StringBuilder(words[j]);
+                if (words[i].equals(sb.reverse().toString())) result++;
+            }
+        }
+        return result;
+    }
+
+    public static int findNonMinOrMax(int[] nums) {
+        int min = Arrays.stream(nums).min().orElse(1);
+        int max = Arrays.stream(nums).max().orElse(1);
+        for (int i = 0; i < nums.length; i++) {
+            if (nums[i] < max && nums[i] > min) return nums[i];
+        }
+        return -1;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1578,6 +1644,8 @@ public class Main {
 
         // isPalindrome("A man, a plan, a canal: Panama");
         // addDigits(111);
-        repeatedSubstringPattern("ab");
+        // repeatedSubstringPattern("ab");
+        //longestAlternatingSubarray(new int[] {2,3,4,5}, 4);
+        countBeautifulPairs(new int[] {31,25,72,79,74});
     }
 }
