@@ -1576,6 +1576,51 @@ public class Main {
         return -1;
     }
 
+    public static int minimizedStringLength(String s) {
+        return s.chars()
+                .mapToObj(e->(char)e).collect(Collectors.toSet()).size();
+    }
+
+    public static String multiply(String num1, String num2) {
+        String mul1 = num1;
+        String mul2 = num2;
+        if (num1.length() < num2.length()) {
+            mul1 = num2;
+            mul2 = num1;
+        }
+
+        int[] mul = new int [mul1.length() + 1];
+        int[] sum = new int [mul1.length() + mul2.length() + 1];
+        int mulRemainder;
+        int sumRemainder;
+
+        for (int i = mul2.length() - 1; i >= 0; i--) {
+            mulRemainder = 0;
+            sumRemainder = 0;
+            for (int j = mul1.length() - 1; j >= 0; j--) {
+                int prod = (mul2.charAt(i) - '0') * (mul1.charAt(j) - '0');
+                mul[j + 1] = (prod + mulRemainder) % 10;
+                mulRemainder = (prod + mulRemainder) / 10;
+            }
+            mul[0] = mulRemainder;
+
+            for (int m = mul.length - 1; m >= 0; m--) {
+                int i1 = sum.length - 1 - (mul.length - m - 1) - (mul2.length() - i - 1);
+                int currentSum = sum[i1] + mul[m];
+                sum[i1] = (currentSum + sumRemainder) % 10;
+                sumRemainder = (currentSum + sumRemainder) / 10;
+            }
+            sum[0] = sumRemainder;
+        }
+
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < sum.length; i++) {
+            sb.append(sum[i]);
+        }
+        String result = sb.toString().replaceAll("^0*", "");
+        return result.isEmpty() ? "0" : result;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1646,6 +1691,7 @@ public class Main {
         // addDigits(111);
         // repeatedSubstringPattern("ab");
         //longestAlternatingSubarray(new int[] {2,3,4,5}, 4);
-        countBeautifulPairs(new int[] {31,25,72,79,74});
+        // countBeautifulPairs(new int[] {31,25,72,79,74});
+        multiply("237", "284");
     }
 }
