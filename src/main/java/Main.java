@@ -1526,8 +1526,7 @@ public class Main {
                 }
                 if (i == nums.length - 2 && nums[i + 1] <= threshold && !start)
                     currentLen++;
-            }
-            else {
+            } else {
                 start = true;
                 maxLen = Math.max(maxLen, currentLen);
                 currentLen = 0;
@@ -1578,7 +1577,7 @@ public class Main {
 
     public static int minimizedStringLength(String s) {
         return s.chars()
-                .mapToObj(e->(char)e).collect(Collectors.toSet()).size();
+                .mapToObj(e -> (char) e).collect(Collectors.toSet()).size();
     }
 
     public static String multiply(String num1, String num2) {
@@ -1589,8 +1588,8 @@ public class Main {
             mul2 = num1;
         }
 
-        int[] mul = new int [mul1.length() + 1];
-        int[] sum = new int [mul1.length() + mul2.length() + 1];
+        int[] mul = new int[mul1.length() + 1];
+        int[] sum = new int[mul1.length() + mul2.length() + 1];
         int mulRemainder;
         int sumRemainder;
 
@@ -1619,6 +1618,284 @@ public class Main {
         }
         String result = sb.toString().replaceAll("^0*", "");
         return result.isEmpty() ? "0" : result;
+    }
+
+    public static String oddString(String[] words) {
+        int len = words[0].length() - 1;
+        int[][] diff = new int[words.length][len];
+        for (int i = 0; i < words.length; i++) {
+            for (int j = 0; j < len; j++) {
+                diff[i][j] = words[i].charAt(j + 1) - words[i].charAt(j);
+            }
+        }
+
+        int odd;
+        for (int i = 0; i < diff.length; i++) {
+            odd = 0;
+            for (int j = 0; j < diff.length; j++) {
+                if (!Arrays.equals(diff[i], diff[j])) odd++;
+            }
+            if (odd == diff.length - 1) return words[i];
+        }
+        return "";
+    }
+
+    public static int findDelayedArrivalTime(int arrivalTime, int delayedTime) {
+        return (arrivalTime + delayedTime) % 24;
+    }
+
+    public static int findMaxK(int[] nums) {
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = nums.length - 1; j >= 0; j--) {
+                if (nums[i] == -nums[j]) return -nums[i];
+            }
+        }
+        return -1;
+    }
+
+    public static int averageValue(int[] nums) {
+        return (int) Math.floor(Arrays.stream(nums).filter(i -> i % 2 == 0 && i % 3 == 0).average().orElse(0));
+    }
+
+    public static int[] applyOperations(int[] nums) {
+        for (int i = 0; i < nums.length - 1; i++) {
+            if (nums[i] == nums[i + 1]) {
+                nums[i] *= 2;
+                nums[i + 1] = 0;
+            }
+        }
+        int index = 0;
+        int[] shifted = new int[nums.length];
+        for (int i = 0; i < shifted.length; i++) {
+            if (nums[i] != 0) shifted[index++] = nums[i];
+        }
+        return shifted;
+    }
+
+    public static int distinctAverages(int[] nums) {
+        Arrays.sort(nums);
+        HashSet<Double> set = new HashSet<>();
+        for (int i = 0; i < nums.length / 2; i++) {
+            set.add((nums[i] + nums[nums.length - 1 - i]) / 2.0);
+        }
+        return set.size();
+    }
+
+    public static int unequalTriplets(int[] nums) {
+        int result = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                for (int k = j + 1; k < nums.length; k++) {
+                    if (nums[i] != nums[j] && nums[i] != nums[k] && nums[j] != nums[k])
+                        result++;
+                }
+            }
+        }
+        return result;
+    }
+
+    public static int numberOfCuts(int n) {
+        if (n == 1) return 0;
+        if (n % 2 == 0) return n / 2;
+        else return n;
+    }
+
+    public static int pivotInteger(int n) {
+        int right = 0;
+        int left = 0;
+        int pivot = -1;
+        int lastRight = 0;
+        int lastLeft = 0;
+        for (int i = 0; i < n / 2; i++) {
+            right += n - i;
+            left += i + 1;
+            lastLeft = i + 1;
+            lastRight = n - i;
+        }
+        do {
+            if (right > left) {
+                right -= lastRight;
+                left += lastRight;
+            } else {
+                left -= lastLeft;
+                right += lastLeft;
+            }
+        } while (right != left);
+        return pivot;
+    }
+
+    public static boolean isCircularSentence(String sentence) {
+        String[] array = sentence.split(" ");
+        if (array[0].charAt(0) != array[array.length - 1].charAt(array[array.length - 1].length() - 1)) return false;
+        for (int i = 0; i < array.length - 1; i++) {
+            if (array[i].charAt(array[i].length() - 1) != array[i + 1].charAt(0)) return false;
+        }
+        return true;
+    }
+
+    public static int maximumValue(String[] strs) {
+        int max = 0;
+        int value;
+        for (String str : strs) {
+            if ((str.replaceAll("[a-zA-Z]", "").equals(str))) {
+                value = Integer.parseInt(str);
+                if (value > max) max = value;
+            } else if (str.length() > max) max = str.length();
+        }
+        return max;
+    }
+
+    public static int similarPairs(String[] words) {
+        int result = 0;
+        for (int i = 0; i < words.length; i++) {
+            for (int j = i + 1; j < words.length; j++) {
+                if (words[i].replaceAll("[ " + words[j] + "]", "").isEmpty())
+                    result++;
+            }
+        }
+        return result;
+    }
+
+    public static int maximumCount(int[] nums) {
+        int zero = Arrays.binarySearch(nums, 0);
+        int one = Arrays.binarySearch(nums, 1);
+        return 0;
+    }
+
+    public static int differenceOfSum(int[] nums) {
+        int elemSum = Arrays.stream(nums).sum();
+        int[] digitArray = nums;
+        while (Arrays.stream(digitArray).filter(i -> i > 9).count() > 0) {
+            digitArray = Arrays.stream(nums).map(i -> {
+                int currentSum = 0;
+                while (i > 9) {
+                    currentSum += i % 10;
+                    i /= 10;
+                }
+                return currentSum + i;
+            }).toArray();
+        }
+        return Math.abs(elemSum - Arrays.stream(digitArray).sum());
+    }
+
+    public static int getCommon(int[] nums1, int[] nums2) {
+        for (int i = 0; i < nums2.length; i++) {
+            if (Arrays.binarySearch(nums1, nums2[i]) > -1) return nums2[i];
+        }
+        return -1;
+    }
+
+    public static int alternateDigitSum(int n) {
+        String num = String.valueOf(n);
+        int result = 0;
+        int sign = num.length() % 2 == 0 ? -1 : 1;
+        while (n > 9) {
+            result += sign * (n % 10);
+            n /= 10;
+            sign *= -1;
+        }
+        result += sign * n;
+        return result;
+    }
+
+    public int[] leftRightDifference(int[] nums) {
+        int[] result = new int[nums.length];
+        int leftSum = 0;
+        int rightSum = Arrays.stream(nums).sum() - nums[0];
+        for (int i = 0; i < nums.length - 1; i++) {
+            result[i] = Math.abs(leftSum - rightSum);
+            leftSum += nums[i];
+            rightSum -= nums[i + 1];
+        }
+        result[result.length - 1] = leftSum;
+        return result;
+    }
+
+    public static int[] rowAndMaximumOnes(int[][] mat) {
+        int[] result = new int[2];
+        int count;
+
+        for (int i = 0; i < mat.length; i++) {
+            count = (int) Arrays.stream(mat[i]).filter(j -> j == 1).count();
+            if (count > result[1]) {
+                result[1] = count;
+                result[0] = i;
+            }
+        }
+        return result;
+    }
+
+    public static int percentageLetter(String s, char letter) {
+        System.out.println(s.replace(String.valueOf(letter), ""));
+        return ((s.length() - s.replace(String.valueOf(letter), "").length()) * 100) / s.length();
+    }
+
+    public static String bestHand(int[] ranks, char[] suits) {
+        boolean flash = true;
+        for (int i = 0; i < suits.length - 1; i++) {
+            if (suits[i] != suits[i + 1]) {
+                flash = false;
+                break;
+            }
+        }
+        if (flash) return "Flush";
+
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int rank : ranks) {
+            map.put(rank, map.get(rank) == null ? 1 : map.get(rank) + 1);
+        }
+        boolean pair = false;
+
+        for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+            if (m.getValue() >= 3) return "Three of a Kind";
+            if (m.getValue() == 2) pair = true;
+        }
+        if (pair) return "Pair";
+        return "High Card";
+    }
+
+    public static boolean uniqueOccurrences(int[] arr) {
+        Map<Integer, Integer> map = new HashMap<>();
+        for (int val : arr) {
+            map.put(val, map.get(val) == null ? 1 : map.get(val) + 1);
+        }
+
+        Set<Integer> set = new HashSet<>();
+
+        for (Map.Entry<Integer, Integer> m : map.entrySet()) {
+            if (set.contains(m.getValue())) return false;
+            set.add(m.getValue());
+        }
+
+        return true;
+    }
+
+    public static String dayOfTheWeek(int day, int month, int year) {
+        LocalDate ld = LocalDate.of(year, month, day);
+        String week = ld.getDayOfWeek().toString();
+        return week.charAt(0) + week.toLowerCase().substring(1, week.length());
+    }
+
+    public static int maxProduct(int[] nums) {
+        int max = 0;
+        int prod = 0;
+        for (int i = 0; i < nums.length; i++) {
+            for (int j = i + 1; j < nums.length; j++) {
+                prod = (nums[i] - 1) * (nums[j] - 1);
+                if (prod > max) max = prod;
+            }
+        }
+        return max;
+    }
+
+    public static String reformatDate(String date) {
+        String[] dateStr = date.split(" ");
+        List<String> month = List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        int monIdx = (month.indexOf(dateStr[1]) + 1);
+        String day = dateStr[0].replaceAll("(th)|(nd)|(st)|(rd)", "");
+        return dateStr[2] + "-" + (monIdx <= 9 ? "0" + monIdx : monIdx) + "-" +
+                (day.length() == 1 ? "0" + day : day);
     }
 
     public static void main(String[] args) {
@@ -1692,6 +1969,12 @@ public class Main {
         // repeatedSubstringPattern("ab");
         //longestAlternatingSubarray(new int[] {2,3,4,5}, 4);
         // countBeautifulPairs(new int[] {31,25,72,79,74});
-        multiply("237", "284");
+        // multiply("237", "284");
+        // oddString(new String[]{"adc", "wzy", "abc"});
+        // findMaxK(new int[] {-1,10,6,7,-7,1});
+        // differenceOfSum(new int[] {1,15,6,3});
+        // getCommon(new int[] {1,2,3}, new int[] {2,4});
+        // percentageLetter("foobar", 'o');
+        maxProduct(new int[] {3,4,5,2});
     }
 }
