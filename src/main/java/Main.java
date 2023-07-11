@@ -1702,25 +1702,24 @@ public class Main {
     }
 
     public static int pivotInteger(int n) {
+        if (n == 1) return 1;
         int right = 0;
         int left = 0;
-        int pivot = -1;
-        int lastRight = 0;
-        int lastLeft = 0;
-        for (int i = 0; i < n / 2; i++) {
-            right += n - i;
-            left += i + 1;
-            lastLeft = i + 1;
-            lastRight = n - i;
+        int pivot = n / 3 * 2;
+        int lastRight = pivot + 1;
+        int lastLeft = pivot - 1;
+        for (int i = 1; i != pivot; i++) {
+            left += i;
+        }
+        for (int i = n; i != pivot; i--) {
+            right += i;
         }
         do {
-            if (right > left) {
-                right -= lastRight;
-                left += lastRight;
-            } else {
-                left -= lastLeft;
-                right += lastLeft;
-            }
+            right -= lastRight;
+            left += pivot;
+            lastRight++;
+            pivot++;
+            if (left > right) return -1;
         } while (right != left);
         return pivot;
     }
@@ -1750,17 +1749,12 @@ public class Main {
         int result = 0;
         for (int i = 0; i < words.length; i++) {
             for (int j = i + 1; j < words.length; j++) {
-                if (words[i].replaceAll("[ " + words[j] + "]", "").isEmpty())
+                if (words[i].replaceAll("[ " + words[j] + "]", "").isEmpty() &&
+                        words[j].replaceAll("[ " + words[i] + "]", "").isEmpty())
                     result++;
             }
         }
         return result;
-    }
-
-    public static int maximumCount(int[] nums) {
-        int zero = Arrays.binarySearch(nums, 0);
-        int one = Arrays.binarySearch(nums, 1);
-        return 0;
     }
 
     public static int differenceOfSum(int[] nums) {
@@ -1898,6 +1892,32 @@ public class Main {
                 (day.length() == 1 ? "0" + day : day);
     }
 
+    public static int[] replaceElements(int[] arr) {
+        int max;
+        for (int i = 0; i < arr.length; i++) {
+            max = -1;
+            for (int j = i + 1; j < arr.length; j++) {
+                if (arr[j] > max) max = arr[j];
+            }
+            arr[i] = max;
+        }
+        return arr;
+    }
+
+    public static int findNumbers(int[] nums) {
+        int result = 0;
+        boolean even;
+        for (int n: nums) {
+            even = false;
+            while (n > 9) {
+                n /= 10;
+                even = !even;
+            }
+            if (even) result++;
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
@@ -1975,6 +1995,8 @@ public class Main {
         // differenceOfSum(new int[] {1,15,6,3});
         // getCommon(new int[] {1,2,3}, new int[] {2,4});
         // percentageLetter("foobar", 'o');
-        maxProduct(new int[] {3,4,5,2});
+        // maxProduct(new int[] {3,4,5,2});
+        // similarPairs(new String[] {"aba","aabb","abcd","bac","aabc"});
+        pivotInteger(18);
     }
 }
