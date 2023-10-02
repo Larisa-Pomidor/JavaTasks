@@ -1,4 +1,4 @@
-import com.sun.jdi.IntegerValue;
+//import com.sun.jdi.IntegerValue;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
@@ -106,32 +106,32 @@ public class Main {
     }
 
     // Find the Difference of Two Arrays
-    public static List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
-        List<Integer> difference1 = new ArrayList<>(Arrays.stream(nums1).boxed().toList());
-        List<Integer> difference2 = new ArrayList<>(Arrays.stream(nums2).boxed().toList());
-        difference1.removeAll(Arrays.stream(nums2).boxed().toList());
-        difference2.removeAll(Arrays.stream(nums1).boxed().toList());
-
-        List<List<Integer>> result = new ArrayList<>();
-        result.add(difference1.stream().distinct().toList());
-        result.add(difference2.stream().distinct().toList());
-
-        return result;
-    }
+//    public static List<List<Integer>> findDifference(int[] nums1, int[] nums2) {
+//        List<Integer> difference1 = new ArrayList<>(Arrays.stream(nums1).boxed().toList());
+//        List<Integer> difference2 = new ArrayList<>(Arrays.stream(nums2).boxed().toList());
+//        difference1.removeAll(Arrays.stream(nums2).boxed().toList());
+//        difference2.removeAll(Arrays.stream(nums1).boxed().toList());
+//
+//        List<List<Integer>> result = new ArrayList<>();
+//        result.add(difference1.stream().distinct().toList());
+//        result.add(difference2.stream().distinct().toList());
+//
+//        return result;
+//    }
 
     // Given a string with the weights of FFC members in normal order
     // can you give this string ordered by "weights" of these numbers?
-    public static String orderWeight(String strng) {
-        strng = strng.replaceAll("\\D+", " ");
-        strng = strng.replaceAll("^\\D+", "");
-        strng = strng.replaceAll("\\D+$", "");
-
-        List<String> weight = new ArrayList<>(List.of(strng.split(" ")));
-
-        weight.sort((a, b) -> sum(a) < sum(b) ? -1 : sum(a) == sum(b) ? a.compareTo(b) : 1);
-
-        return String.join(" ", weight);
-    }
+//    public static String orderWeight(String strng) {
+//        strng = strng.replaceAll("\\D+", " ");
+//        strng = strng.replaceAll("^\\D+", "");
+//        strng = strng.replaceAll("\\D+$", "");
+//
+//        List<String> weight = new ArrayList<>(List.of(strng.split(" ")));
+//
+//        weight.sort((a, b) -> sum(a) < sum(b) ? -1 : sum(a) == sum(b) ? a.compareTo(b) : 1);
+//
+//        return String.join(" ", weight);
+//    }
 
     public static int sum(String a) {
         return Arrays.stream(a.split("")).mapToInt(Integer::parseInt).reduce(0, Integer::sum);
@@ -314,33 +314,33 @@ public class Main {
         return sum.stream().mapToInt(i -> i).toArray();
     }
 
-    public static int thirdMax(int[] nums) {
-        List<Integer> distArray = Arrays.stream(nums).boxed().distinct().sorted(Comparator.reverseOrder()).toList();
-        if (distArray.size() < 3) return Collections.max(distArray);
-        else return distArray.get(2);
-    }
+//    public static int thirdMax(int[] nums) {
+//        List<Integer> distArray = Arrays.stream(nums).boxed().distinct().sorted(Comparator.reverseOrder()).toList();
+//        if (distArray.size() < 3) return Collections.max(distArray);
+//        else return distArray.get(2);
+//    }
 
     // Given an integer array nums, move all 0's to the end of it while
     // maintaining the relative order of the non-zero elements.
-    public static int[] moveZeroes(int[] nums) {
-        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
-        int zeroLength = nums.length - noZeros.size();
-        ArrayList<Integer> list = new ArrayList<>(noZeros);
-        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
-        return list.stream().mapToInt(i -> i).toArray();
-    }
+//    public static int[] moveZeroes(int[] nums) {
+//        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
+//        int zeroLength = nums.length - noZeros.size();
+//        ArrayList<Integer> list = new ArrayList<>(noZeros);
+//        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
+//        return list.stream().mapToInt(i -> i).toArray();
+//    }
 
     // Given an integer array nums, move all 0's to the end of it while
     // maintaining the relative order of the non-zero elements.
-    public static void moveZeroes2(int[] nums) {
-        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
-        int zeroLength = nums.length - noZeros.size();
-        ArrayList<Integer> list = new ArrayList<>(noZeros);
-        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
-        for (int i = 0; i < nums.length; i++) {
-            nums[i] = list.get(i);
-        }
-    }
+//    public static void moveZeroes2(int[] nums) {
+//        List<Integer> noZeros = Arrays.stream(nums).boxed().filter(i -> i != 0).toList();
+//        int zeroLength = nums.length - noZeros.size();
+//        ArrayList<Integer> list = new ArrayList<>(noZeros);
+//        list.addAll(Arrays.stream(new int[zeroLength]).boxed().toList());
+//        for (int i = 0; i < nums.length; i++) {
+//            nums[i] = list.get(i);
+//        }
+//    }
 
     public static ListNode swapNodes(ListNode head, int k) {
         ListNode tempNode = head;
@@ -720,15 +720,15 @@ public class Main {
     // Given the string s, the size of each group k and the character fill,
     // return a string array denoting the composition of every group s has been divided into,
     // using the above procedure.
-    public static String[] divideString(String s, int k, char fill) {
-        ArrayList<String> result = new ArrayList<>();
-        for (int i = 0; i < s.length() / k; i++) {
-            result.add(s.substring(i * k, i * k + k));
-        }
-        int rest = s.length() % k;
-        if (rest != 0) result.add(s.substring(s.length() - rest - 1) + String.valueOf(fill).repeat((k - rest)));
-        return result.toArray(new String[0]);
-    }
+//    public static String[] divideString(String s, int k, char fill) {
+//        ArrayList<String> result = new ArrayList<>();
+//        for (int i = 0; i < s.length() / k; i++) {
+//            result.add(s.substring(i * k, i * k + k));
+//        }
+//        int rest = s.length() % k;
+//        if (rest != 0) result.add(s.substring(s.length() - rest - 1) + String.valueOf(fill).repeat((k - rest)));
+//        return result.toArray(new String[0]);
+//    }
 
     // Given an array of strings words, return the first palindromic string in the array.
     // If there is no such string, return an empty string "".
@@ -757,18 +757,18 @@ public class Main {
 
     // Given three integer arrays nums1, nums2, and nums3, return a distinct array containing all the values that are present
     // in at least two out of the three arrays. You may return the values in any order.
-    public static List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
-        List<Integer> result = new ArrayList<>();
-        Map<Integer, Integer> commonMap = new HashMap<>();
-        commonElements(new HashSet<>(Arrays.stream(nums1).boxed().toList()), commonMap);
-        commonElements(new HashSet<>(Arrays.stream(nums2).boxed().toList()), commonMap);
-        commonElements(new HashSet<>(Arrays.stream(nums3).boxed().toList()), commonMap);
-
-        for (Map.Entry<Integer, Integer> commonEl : commonMap.entrySet()) {
-            if (commonEl.getValue() >= 2) result.add(commonEl.getKey());
-        }
-        return result;
-    }
+//    public static List<Integer> twoOutOfThree(int[] nums1, int[] nums2, int[] nums3) {
+//        List<Integer> result = new ArrayList<>();
+//        Map<Integer, Integer> commonMap = new HashMap<>();
+//        commonElements(new HashSet<>(Arrays.stream(nums1).boxed().toList()), commonMap);
+//        commonElements(new HashSet<>(Arrays.stream(nums2).boxed().toList()), commonMap);
+//        commonElements(new HashSet<>(Arrays.stream(nums3).boxed().toList()), commonMap);
+//
+//        for (Map.Entry<Integer, Integer> commonEl : commonMap.entrySet()) {
+//            if (commonEl.getValue() >= 2) result.add(commonEl.getKey());
+//        }
+//        return result;
+//    }
 
     public static Map<Integer, Integer> commonElements(HashSet<Integer> nums, Map<Integer, Integer> commonMap) {
         for (int n : nums) {
@@ -840,25 +840,25 @@ public class Main {
     // It is guaranteed there is at least one word that is not banned, and that the answer is unique.
     //
     //The words in paragraph are case-insensitive and the answer should be returned in lowercase.
-    public static String mostCommonWord(String paragraph, String[] banned) {
-        paragraph = paragraph.replaceAll("[!?',;.]", " ");
-        paragraph = paragraph.replaceAll("\s+", " ");
-        String[] parArray = paragraph.split(" ");
-        Map<String, Integer> maxMap = new HashMap<>();
-        HashSet<String> unique = new HashSet<>(List.of(banned));
-        for (String par : parArray) {
-            par = par.toLowerCase();
-            if (!unique.contains(par)) {
-                if (maxMap.get(par) == null) {
-                    maxMap.put(par, 1);
-                } else {
-                    maxMap.put(par, maxMap.get(par) + 1);
-                }
-            }
-        }
-
-        return maxMap.keySet().stream().max(Comparator.comparing(maxMap::get)).orElse(null);
-    }
+//    public static String mostCommonWord(String paragraph, String[] banned) {
+//        paragraph = paragraph.replaceAll("[!?',;.]", " ");
+//        paragraph = paragraph.replaceAll("\s+", " ");
+//        String[] parArray = paragraph.split(" ");
+//        Map<String, Integer> maxMap = new HashMap<>();
+//        HashSet<String> unique = new HashSet<>(List.of(banned));
+//        for (String par : parArray) {
+//            par = par.toLowerCase();
+//            if (!unique.contains(par)) {
+//                if (maxMap.get(par) == null) {
+//                    maxMap.put(par, 1);
+//                } else {
+//                    maxMap.put(par, maxMap.get(par) + 1);
+//                }
+//            }
+//        }
+//
+//        return maxMap.keySet().stream().max(Comparator.comparing(maxMap::get)).orElse(null);
+//    }
 
     // Given an integer n, return true if it is a power of two. Otherwise, return false.
     //
@@ -1400,16 +1400,16 @@ public class Main {
 
     }
 
-    public static int lengthOfLastWord(String s) {
-        s = s.strip();
-        int result = 0;
-        for (int i = s.length() - 1; i >= 0; i--) {
-            if (!String.valueOf(s.charAt(i)).isBlank()) {
-                result++;
-            } else return result;
-        }
-        return result;
-    }
+//    public static int lengthOfLastWord(String s) {
+//        s = s.strip();
+//        int result = 0;
+//        for (int i = s.length() - 1; i >= 0; i--) {
+//            if (!String.valueOf(s.charAt(i)).isBlank()) {
+//                result++;
+//            } else return result;
+//        }
+//        return result;
+//    }
 
     public static int searchInsert(int[] nums, int target) {
         int position = Arrays.binarySearch(nums, target);
@@ -1473,13 +1473,13 @@ public class Main {
         return list;
     }
 
-    public static boolean repeatedSubstringPattern(String s) {
-        if (s.length() == 1) return false;
-        for (int i = 0; i < s.length() / 2; i++) {
-            if (s.substring(0, i + 1).repeat(s.length() / (i + 1)).equals(s)) return true;
-        }
-        return false;
-    }
+//    public static boolean repeatedSubstringPattern(String s) {
+//        if (s.length() == 1) return false;
+//        for (int i = 0; i < s.length() / 2; i++) {
+//            if (s.substring(0, i + 1).repeat(s.length() / (i + 1)).equals(s)) return true;
+//        }
+//        return false;
+//    }
 
     public static boolean repeatedSubstringPattern2(String s) {
         for (int i = 0; i < s.length() / 2 + 1; i++) {
@@ -1883,14 +1883,14 @@ public class Main {
         return max;
     }
 
-    public static String reformatDate(String date) {
-        String[] dateStr = date.split(" ");
-        List<String> month = List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        int monIdx = (month.indexOf(dateStr[1]) + 1);
-        String day = dateStr[0].replaceAll("(th)|(nd)|(st)|(rd)", "");
-        return dateStr[2] + "-" + (monIdx <= 9 ? "0" + monIdx : monIdx) + "-" +
-                (day.length() == 1 ? "0" + day : day);
-    }
+//    public static String reformatDate(String date) {
+//        String[] dateStr = date.split(" ");
+//        List<String> month = List.of("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+//        int monIdx = (month.indexOf(dateStr[1]) + 1);
+//        String day = dateStr[0].replaceAll("(th)|(nd)|(st)|(rd)", "");
+//        return dateStr[2] + "-" + (monIdx <= 9 ? "0" + monIdx : monIdx) + "-" +
+//                (day.length() == 1 ? "0" + day : day);
+//    }
 
     public static int[] replaceElements(int[] arr) {
         int max;
@@ -1916,6 +1916,53 @@ public class Main {
             if (even) result++;
         }
         return result;
+    }
+
+    // Implement the myAtoi(string s) function, which converts a string to a 32-bit signed integer
+    public static int myAtoi(String s) {
+        s = s.trim();
+
+        if (s.length() == 0) return 0;
+        else if (s.length() == 1 && s.charAt(0) == '+')
+            return 0;
+        else if (s.length() == 1 && s.charAt(0) == '-')
+            return 0;
+
+        long number = 0;
+        int counter = 0;
+        long order = 10;
+
+        boolean negative = false;
+
+        if (s.charAt(counter) == '-')
+        {
+            counter++;
+            negative = true;
+        }
+        else if (s.charAt(counter) == '+') {
+            counter++;
+        }
+
+        while (s.charAt(counter) == '0') {
+            counter++;
+            if (counter == s.length()) return 0;
+        }
+
+
+        while(Character.isDigit(s.charAt(counter))) {
+
+            number = (s.charAt(counter) - '0') + number * order;
+
+            if (number > Integer.MAX_VALUE)
+                return !negative ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+            else if (number < Integer.MIN_VALUE)
+                return !negative ? Integer.MIN_VALUE : Integer.MAX_VALUE;
+
+            counter++;
+            if (counter == s.length()) break;
+        }
+
+        return negative ? - (int) number : (int) number;
     }
 
     public static void main(String[] args) {
@@ -1997,6 +2044,7 @@ public class Main {
         // percentageLetter("foobar", 'o');
         // maxProduct(new int[] {3,4,5,2});
         // similarPairs(new String[] {"aba","aabb","abcd","bac","aabc"});
-        pivotInteger(18);
+        //pivotInteger(18);
+        myAtoi("4193 with words");
     }
 }
