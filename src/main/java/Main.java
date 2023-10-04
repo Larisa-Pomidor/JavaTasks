@@ -1965,6 +1965,34 @@ public class Main {
         return negative ? - (int) number : (int) number;
     }
 
+    // Find two lines that together with the x-axis form a container,
+    // such that the container contains the most water.
+    public static int maxArea(int[] height) {
+        int result = 0;
+        int left = 0;
+        int right = height.length - 1;
+
+        while (left < right) {
+            int square = Math.min(height[left], height[right]) * (right - left);
+            result = Math.max(result, square);
+
+            if (height[left] < height[right]) left++;
+            else right++;
+        }
+        return result;
+    }
+
+    public static int maxArea2(int[] height) {
+        int result = 0;
+        for (int i = 0; i < height.length; i++) {
+            for (int j = i + 1; j < height.length; j++) {
+                int square = Math.min(height[i], height[j]) * (j - i);
+                if (square > result) result = square;
+            }
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
