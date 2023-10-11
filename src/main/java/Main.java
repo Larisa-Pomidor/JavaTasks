@@ -1993,6 +1993,41 @@ public class Main {
         return result;
     }
 
+    // An ugly number is a positive integer whose prime factors are limited to 2, 3, and 5.
+    //
+    //Given an integer n, return true if n is an ugly number.
+    public boolean isUgly(int n) {
+        if (n <= 0) return false;
+
+        while (n % 2 == 0) n /= 2;
+        while (n % 3 == 0) n /= 3;
+        while (n % 5 == 0) n /= 5;
+
+        return n == 1;
+    }
+
+    // Given a string s containing just the characters '(', ')', '{', '}', '[' and ']',
+    // determine if the input string is valid.
+    public boolean isValid(String s) {
+        Map<Character, Character> parentheses = new HashMap<>();
+        parentheses.put(')', '(');
+        parentheses.put(']', '[');
+        parentheses.put('}', '{');
+
+        LinkedList<Character> characterList = new LinkedList<>();
+
+        for (int i = 0; i < s.length(); i++) {
+            if (!parentheses.containsKey(s.charAt(i))) {
+                characterList.add(s.charAt(i));
+            }
+            else {
+                if (characterList.size() == 0 || characterList.getLast() != parentheses.get(s.charAt(i))) return false;
+                else characterList.removeLast();
+            }
+        }
+        return characterList.size() == 0;
+    }
+
     public static void main(String[] args) {
         // long res = ipsBetween("10.0.0.0", "10.0.0.50");
         //System.out.println(average(new int []{1,2,3,4,6}));
